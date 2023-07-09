@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{74A2D8E8-9C07-4677-9E68-CFE986F3B2CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{AF83E29D-F15A-488E-A212-C83735A00B69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solution.Services.HRAPI", "Solution.Services.HRAPI\Solution.Services.HRAPI.csproj", "{2F0BD5B6-EA78-4509-809A-C085D73F5416}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F0BD5B6-EA78-4509-809A-C085D73F5416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F0BD5B6-EA78-4509-809A-C085D73F5416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F0BD5B6-EA78-4509-809A-C085D73F5416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F0BD5B6-EA78-4509-809A-C085D73F5416}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2F0BD5B6-EA78-4509-809A-C085D73F5416} = {74A2D8E8-9C07-4677-9E68-CFE986F3B2CF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC6191C4-35F6-44E7-94C6-326453DE76D5}
+	EndGlobalSection
+EndGlobal
