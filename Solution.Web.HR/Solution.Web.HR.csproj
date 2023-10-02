@@ -17,4 +17,9 @@
     <ProjectReference Include="..\Solution.Core\Solution.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\font-awesome\css\" />
+    <Folder Include="wwwroot\lib\font-awesome\js\" />
+  </ItemGroup>
+
 </Project>

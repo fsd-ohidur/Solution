@@ -47,7 +47,7 @@ namespace Solution.Services.HRAPI.Controllers
 		{
 			try
 			{
-				var model = await _unitOfWork.CommonDatas.Get(x=>x.Id==id);
+				var model = await _unitOfWork.CommonDatas.GetAsync(x=>x.Id==id);
 				_response.Result = model;
 			}
 			catch (Exception ex)
@@ -81,6 +81,13 @@ namespace Solution.Services.HRAPI.Controllers
 			try
 			{
 				CommonData data = _mapper.Map<CommonDataDto, CommonData>(model);
+				var existingData = await _unitOfWork.Companies.GetAsync(x => x.Id == model.Id);
+				if (existingData != null)
+				{
+					data.CreatedDate = existingData.CreatedDate;
+					data.CreatedBy = existingData.CreatedBy;
+				}
+
 				_unitOfWork.CommonDatas.UpdateAsync(data);
 				await _unitOfWork.SaveAsync();
 				_response.Result = model;

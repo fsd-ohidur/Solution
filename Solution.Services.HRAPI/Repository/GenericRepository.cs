@@ -23,7 +23,7 @@ namespace Solution.Services.HRAPI.Repository
 		{
 			//_context.Update(model);
 			_dbSet.Attach(entity);
-			_dbSet.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+			_dbSet.Entry(entity).State = EntityState.Modified;
 		}
 		public void DeleteAsync(T entity)
 		{
@@ -51,7 +51,7 @@ namespace Solution.Services.HRAPI.Repository
 			}
 			return await query.AsNoTracking().ToListAsync();
 		}
-		public async Task<T> Get(Expression<Func<T, bool>> expression, List<string> includes = null)
+		public async Task<T> GetAsync(Expression<Func<T, bool>> expression, List<string> includes = null)
 		{
 			IQueryable<T> query = _dbSet;
 			if (includes != null)

@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+
 using Newtonsoft.Json;
-using Solution.Web.HR.Models;
+using Solution.Core;
+using Solution.Core.Models.Common;
+using Solution.Core.Models.Common.Dto;
 using Solution.Web.HR.Services.IServices;
 using System.Text;
 
@@ -16,7 +19,7 @@ namespace Solution.Web.HR.Services
 			this.httpClient = httpClient;
 		}
 
-		public async Task<T> SendAsync<T>(ApiRequest apiRequest)
+		public async Task<T> SendAsync<T> (ApiRequest apiRequest)
 		{
 			try
 			{
@@ -63,9 +66,7 @@ namespace Solution.Web.HR.Services
 				return apiResponseDto;
 			}
 		}
-		public void Dispose()
-		{
-			GC.SuppressFinalize(true);
-		}
+
+
 	}
 }

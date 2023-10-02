@@ -1,5 +1,6 @@
 ﻿
 using Solution.Core.Models.Common.Domain;
+using Solution.Core.Models.Common.Dto;
 using Solution.Core.Models.HR.Domain;
 using Solution.Services.HRAPI.Data;
 using Solution.Services.HRAPI.Repository;

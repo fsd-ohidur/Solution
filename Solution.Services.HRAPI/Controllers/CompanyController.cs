@@ -6,7 +6,7 @@ using Solution.Services.HRAPI.Repository.IRepository;
 
 namespace Solution.Services.HRAPI.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
 	[ApiController]
 	public class CompanyController : ControllerBase
 	{
@@ -29,13 +29,13 @@ namespace Solution.Services.HRAPI.Controllers
 			try
 			{
 				IEnumerable<Company> model = await _unitOfWork.Companies.GetAllAsync();
-				_response.Result= _mapper.Map<IEnumerable<CompanyDto>>(model); 	
+				_response.Result = _mapper.Map<List<CompanyDto>>(model);
 			}
 			catch (Exception ex)
 			{
 				_response.IsSuccess = false;
 				_response.ErrorMessages = new List<string>() { ex.ToString() };
-				_logger.LogError(ex,$"Something went wrong in the {nameof(Get)}");
+				_logger.LogError(ex, $"Something went wrong in the {nameof(Get)}");
 				return StatusCode(500, "Internal server error");
 			}
 			return Ok(_response);
@@ -47,8 +47,8 @@ namespace Solution.Services.HRAPI.Controllers
 		{
 			try
 			{
-				var model = await _unitOfWork.Companies.Get(x=>x.Id==id);
-				_response.Result = model;
+				var model = await _unitOfWork.Companies.GetAsync(x => x.Id == id);
+				_response.Result = _mapper.Map<CompanyDto>(model);
 			}
 			catch (Exception ex)
 			{
@@ -62,10 +62,10 @@ namespace Solution.Services.HRAPI.Controllers
 		{
 			try
 			{
-				Company data = _mapper.Map<CreateCompanyDto, Company>(model);
+				var data = _mapper.Map<CreateCompanyDto, Company>(model);
 				await _unitOfWork.Companies.CreateAsync(data);
 				await _unitOfWork.SaveAsync();
-				_response.Result = model;
+				_response.Result = _mapper.Map<Company, CreateCompanyDto>(data);
 			}
 			catch (Exception ex)
 			{
@@ -80,10 +80,17 @@ namespace Solution.Services.HRAPI.Controllers
 		{
 			try
 			{
-				Company data = _mapper.Map<CompanyDto, Company>(model);
+				var data = _mapper.Map<CompanyDto, Company>(model);
+				var existingData = await _unitOfWork.Companies.GetAsync(x=>x.Id==model.Id);
+				if (existingData != null)
+				{
+					data.CreatedDate = existingData.CreatedDate;
+					data.CreatedBy = existingData.CreatedBy;
+				}
+
 				_unitOfWork.Companies.UpdateAsync(data);
 				await _unitOfWork.SaveAsync();
-				_response.Result = model;
+				_response.Result = _mapper.Map<Company, CompanyDto>(data);
 			}
 			catch (Exception ex)
 			{
@@ -94,12 +101,17 @@ namespace Solution.Services.HRAPI.Controllers
 		}
 
 		[HttpDelete]
-		public async Task<object> DeleteAsynce([FromBody] CompanyDto model)
+		[Route("{id}")]
+		public async Task<object> DeleteAsync(string id)
 		{
 			try
 			{
-				Company data = _mapper.Map<CompanyDto, Company>(model);
-				_unitOfWork.Companies.DeleteAsync(data);
+				var model = await _unitOfWork.Companies.GetAsync(x => x.Id.Equals(id));
+				if (model == null)
+				{
+					_response.Result = false;
+				}
+				_unitOfWork.Companies.DeleteAsync(model);
 				await _unitOfWork.SaveAsync();
 				_response.Result = true;
 			}
@@ -110,6 +122,5 @@ namespace Solution.Services.HRAPI.Controllers
 			}
 			return _response;
 		}
-
 	}
 }

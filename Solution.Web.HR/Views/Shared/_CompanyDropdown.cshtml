@@ -1,0 +1,42 @@
+﻿@using Newtonsoft.Json;
+@using Solution.Core.Models.Common.Dto;
+
+<div class="dropdown">
+	<button class="btn btn-secondary dropdown-toggle" type="button" id="companyDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		@if (Context.Request.Cookies.ContainsKey("ComName"))
+		{
+			@Context.Request.Cookies["ComName"].ToString()
+		}
+		else
+		{
+			<span>Select a company</span>
+		}
+	</button>
+	<div class="dropdown-menu" aria-labelledby="companyDropdown">
+		@if (Context.Request.Cookies.ContainsKey("Companies"))
+		{
+			var Companies = JsonConvert.DeserializeObject<IEnumerable<CompanyDto>>(Context.Request.Cookies["Companies"]);
+			foreach (var company in Companies)
+			{
+				<a class="dropdown-item" href="#" onclick="selectCompany('@company.Id', '@company.ComName')">@company.ComName</a>
+			}
+		}
+	</div>
+</div>
+
+<script>
+	function selectCompany(ComId, ComName) {
+		var date = new Date();
+		var days = 7;
+		date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+		var expires = "; expires=" + date.toUTCString();
+		var path = "; path=/";
+
+		document.getElementById("companyDropdown").innerText = ComName;
+		document.cookie = "ComId=" + ComId + expires + path;
+		document.cookie = "ComName=" + ComName + expires + path;
+
+		// Refresh the page
+		location.reload();
+	}
+</script>

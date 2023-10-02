@@ -1,0 +1,31 @@
+﻿@using Solution.Core.Models.HR.Dto;
+@model DesignationDto
+@{
+	var title = "Edit Designation";
+	ViewData["Title"] = title;
+}
+<div class="card">
+	<div class="card-header">
+		<h3>@title</h3>
+	</div>
+	<div class="card-body">
+		<form method="post">
+			<div class="form-floating mb-2">
+				<input asp-for="DesigName" class="form-control" placeholder=" " readonly />
+				<label asp-for="DesigName" class="control-label"></label>
+				<span asp-validation-for="DesigName" class="text-danger"></span>
+			</div>
+			<hr />
+
+			<div class="form-group mt-2">
+				<div class="d-flex mb-2">
+					<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Edit</a>
+					<a asp-action="Index" class="btn btn-lg btn-warning ms-1">Back to list</a>
+				</div>
+			</div>
+
+		</form>
+
+	</div>
+
+</div>

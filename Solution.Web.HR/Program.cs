@@ -1,4 +1,4 @@
-using Solution.Web.HR;
+using Solution.Core;
 using Solution.Web.HR.Services;
 using Solution.Web.HR.Services.IServices;
 
@@ -7,8 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient<ICompanyService,CompanyService>();
 SD.HRAPIBase = builder.Configuration["ServiceUrls:HRAPI"];
-
 builder.Services.AddScoped<ICompanyService,CompanyService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IDesignationService, DesignationService>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

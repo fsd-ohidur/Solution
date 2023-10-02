@@ -48,7 +48,7 @@ namespace Solution.Services.HRAPI.Controllers
 		{
 			try
 			{
-				var model = await _unitOfWork.Departments.Get(x=>x.Id==id);
+				var model = await _unitOfWork.Departments.GetAsync(x=>x.Id==id);
 				_response.Result = model;
 			}
 			catch (Exception ex)
@@ -63,7 +63,7 @@ namespace Solution.Services.HRAPI.Controllers
 		{
 			try
 			{
-				Department data = _mapper.Map<CreateDepartmentDto, Department>(model);
+				var data = _mapper.Map<CreateDepartmentDto, Department>(model);
 				await _unitOfWork.Departments.CreateAsync(data);
 				await _unitOfWork.SaveAsync();
 				_response.Result = model;
@@ -81,7 +81,14 @@ namespace Solution.Services.HRAPI.Controllers
 		{
 			try
 			{
-				Department data = _mapper.Map<DepartmentDto, Department>(model);
+				var data = _mapper.Map<DepartmentDto, Department>(model);
+				var existingData = await _unitOfWork.Departments.GetAsync(x => x.Id == model.Id);
+				if (existingData != null)
+				{
+					data.CreatedDate = existingData.CreatedDate;
+					data.CreatedBy = existingData.CreatedBy;
+				}
+
 				_unitOfWork.Departments.UpdateAsync(data);
 				await _unitOfWork.SaveAsync();
 				_response.Result = model;
@@ -95,12 +102,17 @@ namespace Solution.Services.HRAPI.Controllers
 		}
 
 		[HttpDelete]
-		public async Task<object> DeleteAsynce([FromBody] DepartmentDto model)
+		[Route("{id}")]
+		public async Task<object> DeleteAsync(string id)
 		{
 			try
 			{
-				Department data = _mapper.Map<DepartmentDto, Department>(model);
-				_unitOfWork.Departments.DeleteAsync(data);
+				var model = await _unitOfWork.Departments.GetAsync(x => x.Id.Equals(id));
+				if (model == null)
+				{
+					_response.Result = false;
+				}
+				_unitOfWork.Departments.DeleteAsync(model);
 				await _unitOfWork.SaveAsync();
 				_response.Result = true;
 			}

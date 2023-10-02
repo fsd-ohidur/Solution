@@ -7,7 +7,7 @@ namespace Solution.Services.HRAPI.Repository.IRepository
 		Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> expression = null, 
 			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, 
 			List<string> includes = null);
-		Task<T> Get(Expression<Func<T, bool>> expression, List<string> includes = null);
+		Task<T> GetAsync(Expression<Func<T, bool>> expression, List<string> includes = null);
 		Task CreateAsync(T entity);
 		void UpdateAsync(T entity);
 		void DeleteAsync(T entity);

@@ -8,21 +8,20 @@ namespace Solution.Web.HR.Controllers
 {
     public class CompanyController : Controller
 	{
-		private readonly ICompanyService _companyService;
+		private readonly ICompanyService _Service;
 		private readonly IHttpContextAccessor _httpContextAccessor;
 		private string controllerName;
 
-
-		public CompanyController(ICompanyService companyService, IHttpContextAccessor httpContextAccessor)
+		public CompanyController(ICompanyService service, IHttpContextAccessor httpContextAccessor)
 		{
-			_companyService = companyService;
+			_Service = service;
 			_httpContextAccessor = httpContextAccessor;
 			controllerName = _httpContextAccessor.HttpContext.Request.RouteValues["controller"].ToString();
 		}
 		public async Task<IActionResult> Index()
 		{
 			List<CompanyDto> list = new();
-			var response = await _companyService.GetAllAsync<ResponseDto>();
+			var response = await _Service.GetAllAsync<ResponseDto>();
 			if (response != null && response.IsSuccess)
 			{
 				list = JsonConvert.DeserializeObject<List<CompanyDto>>(Convert.ToString(response.Result));
@@ -33,7 +32,7 @@ namespace Solution.Web.HR.Controllers
 		// GET: CompanysController/Details/5
 		public async Task<IActionResult> Details(Guid id)
 		{
-			var model = await _companyService.GetByIdAsync<CompanyDto>(id);
+			var model = await _Service.GetByIdAsync<CompanyDto>(id);
 			if (model == null)
 			{
 				return NotFound();
@@ -54,7 +53,7 @@ namespace Solution.Web.HR.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var response = await _companyService.CreateCompanyAsync<ResponseDto>(model);
+				var response = await _Service.CreateAsync<ResponseDto>(model);
 				if (response != null && response.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} created successfully.";
@@ -67,10 +66,11 @@ namespace Solution.Web.HR.Controllers
 		// GET: CompanysController/Edit/5
 		public async Task<IActionResult> Edit(Guid id)
 		{
-			var response = await _companyService.GetByIdAsync<ResponseDto>(id);
+			var response = await _Service.GetByIdAsync<ResponseDto>(id);
 			if (response != null && response.IsSuccess)
 			{
-				return View(nameof(Index));
+				CompanyDto model = JsonConvert.DeserializeObject<CompanyDto>(Convert.ToString(response.Result));
+				return View(model);
 			}
 			return NotFound();
 		}
@@ -82,7 +82,7 @@ namespace Solution.Web.HR.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var response = await _companyService.CreateCompanyAsync<ResponseDto>(model);
+				var response = await _Service.UpdateAsync<ResponseDto>(model);
 				if (response != null && response.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} updated successfully.";
@@ -95,7 +95,7 @@ namespace Solution.Web.HR.Controllers
 		// GET: CompanysController/Delete/5
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			var response = await _companyService.GetByIdAsync<ResponseDto>(id);
+			var response = await _Service.GetByIdAsync<ResponseDto>(id);
 			if (response != null && response.IsSuccess)
 			{
 				CompanyDto model = JsonConvert.DeserializeObject<CompanyDto>(Convert.ToString(response.Result));
@@ -109,9 +109,10 @@ namespace Solution.Web.HR.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Delete(CompanyDto model)
 		{
-			var response = await _companyService.DeleteAsync<ResponseDto>(Guid.Parse(model.Id));
-			if(response != null && response.IsSuccess)
+			var response = await _Service.DeleteAsync<ResponseDto>(Guid.Parse(model.Id));
+			if(response.IsSuccess)
 			{
+				TempData["Success"] = $"{controllerName} deleted successfully.";
 				return RedirectToAction(nameof(Index));
 			}
 			return View(model);

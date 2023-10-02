@@ -1,20 +1,19 @@
-﻿
+﻿using Solution.Core.Models.Common;
+using Solution.Core;
 using Solution.Core.Models.Common.Dto;
-using Solution.Web.HR.Models;
 using Solution.Web.HR.Services.IServices;
 
 namespace Solution.Web.HR.Services
 {
-	public class CompanyService : BaseService, ICompanyService
+	public class CompanyService:BaseService, ICompanyService
 	{
 		private readonly IHttpClientFactory _clientFactory;
-
 		public CompanyService(IHttpClientFactory clientFactory):base(clientFactory)
 		{
 			_clientFactory = clientFactory;
 		}
 
-		public async Task<T> CreateCompanyAsync<T>(CompanyDto model)
+		public async Task<T> CreateAsync<T>(CompanyDto model)
 		{
 			return await this.SendAsync<T>(new ApiRequest()
 			{
@@ -22,7 +21,7 @@ namespace Solution.Web.HR.Services
 				Data = model,
 				url = SD.HRAPIBase + "/api/company",
 				AccessToken = ""
-			}) ;
+			});
 		}
 
 		public async Task<T> DeleteAsync<T>(Guid id)
@@ -30,7 +29,7 @@ namespace Solution.Web.HR.Services
 			return await this.SendAsync<T>(new ApiRequest()
 			{
 				ApiType = SD.ApiType.DELETE,
-				url = SD.HRAPIBase + "/api/company/"+id,
+				url = SD.HRAPIBase + "/api/company/" + id,
 				AccessToken = ""
 			});
 		}
