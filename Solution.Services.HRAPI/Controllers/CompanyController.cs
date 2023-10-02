@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Solution.Services.HRAPI.Domain;
-using Solution.Services.HRAPI.Models;
-using Solution.Services.HRAPI.Repository;
+using Solution.Core.Models.Common.Domain;
+using Solution.Core.Models.Common.Dto;
 using Solution.Services.HRAPI.Repository.IRepository;
 
 namespace Solution.Services.HRAPI.Controllers
@@ -20,7 +18,7 @@ namespace Solution.Services.HRAPI.Controllers
 		public CompanyController(IUnitOfWork unitOfWork, ILogger<CompanyController> logger, IMapper mapper)
 		{
 			_unitOfWork = unitOfWork;
-			this._response = new ResponseDto();
+			_response = new ResponseDto();
 			_logger = logger;
 			_mapper = mapper;
 		}
@@ -60,12 +58,12 @@ namespace Solution.Services.HRAPI.Controllers
 			return _response;
 		}
 		[HttpPost]
-		public async Task<object> CreateAsync([FromBody] CompanyDto model)
+		public async Task<object> CreateAsync([FromBody] CreateCompanyDto model)
 		{
 			try
 			{
-				Company company = _mapper.Map<CompanyDto, Company>(model);
-				await _unitOfWork.Companies.CreateAsync(company);
+				Company data = _mapper.Map<CreateCompanyDto, Company>(model);
+				await _unitOfWork.Companies.CreateAsync(data);
 				await _unitOfWork.SaveAsync();
 				_response.Result = model;
 			}
@@ -82,8 +80,8 @@ namespace Solution.Services.HRAPI.Controllers
 		{
 			try
 			{
-				Company company = _mapper.Map<CompanyDto, Company>(model);
-				_unitOfWork.Companies.UpdateAsync(company);
+				Company data = _mapper.Map<CompanyDto, Company>(model);
+				_unitOfWork.Companies.UpdateAsync(data);
 				await _unitOfWork.SaveAsync();
 				_response.Result = model;
 			}
@@ -100,8 +98,8 @@ namespace Solution.Services.HRAPI.Controllers
 		{
 			try
 			{
-				Company company = _mapper.Map<CompanyDto, Company>(model);
-				_unitOfWork.Companies.DeleteAsync(company);
+				Company data = _mapper.Map<CompanyDto, Company>(model);
+				_unitOfWork.Companies.DeleteAsync(data);
 				await _unitOfWork.SaveAsync();
 				_response.Result = true;
 			}

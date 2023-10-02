@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Solution.Web.HR.Models;
+using Solution.Core.Models.Common.Dto;
 using Solution.Web.HR.Services.IServices;
 
 namespace Solution.Web.HR.Controllers
 {
-	public class CompanyController : Controller
+    public class CompanyController : Controller
 	{
 		private readonly ICompanyService _companyService;
 		private readonly IHttpContextAccessor _httpContextAccessor;

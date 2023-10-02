@@ -1,5 +1,6 @@
-﻿using Solution.Services.HRAPI.Domain;
-using Solution.Services.HRAPI.Models;
+﻿
+using Solution.Core.Models.Common.Domain;
+using Solution.Core.Models.HR.Domain;
 
 namespace Solution.Services.HRAPI.Repository.IRepository
 {
@@ -9,7 +10,7 @@ namespace Solution.Services.HRAPI.Repository.IRepository
 		IGenericRepository<Department> Departments { get; }
 		IGenericRepository<Designation> Designations { get; }
 		IGenericRepository<Shift> Shifts { get; }
-		IGenericRepository<Gender> Genders { get; }
+		IGenericRepository<CommonData> CommonDatas { get; }
 		IGenericRepository<Employee> Employees { get; }
 		IGenericRepository<Attendance> Attendances { get; }
 		Task SaveAsync();

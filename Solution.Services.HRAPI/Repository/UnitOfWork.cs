@@ -1,9 +1,11 @@
-﻿using Solution.Services.HRAPI.Data;
-using Solution.Services.HRAPI.Domain;
-using Solution.Services.HRAPI.Models;
+﻿
+using Solution.Core.Models.Common.Domain;
+using Solution.Core.Models.HR.Domain;
+using Solution.Services.HRAPI.Data;
+using Solution.Services.HRAPI.Repository;
 using Solution.Services.HRAPI.Repository.IRepository;
 
-namespace Solution.Services.HRAPI.Repository
+namespace Solution.Core.Models
 {
     public class UnitOfWork : IUnitOfWork
 	{
@@ -13,7 +15,7 @@ namespace Solution.Services.HRAPI.Repository
 		private GenericRepository<Department> _Departments;
 		private GenericRepository<Shift> _Shifts;
 		private GenericRepository<Designation> _Designations;
-		private GenericRepository<Gender> _Genders;
+		private GenericRepository<CommonData> _CommonDatas;
 		private GenericRepository<Employee> _Employees;
 		private GenericRepository<Attendance> _Attendances;
 
@@ -29,7 +31,7 @@ namespace Solution.Services.HRAPI.Repository
 
 		public IGenericRepository<Shift> Shifts => _Shifts ??= new GenericRepository<Shift>(_context);
 
-		public IGenericRepository<Gender> Genders => _Genders ??= new GenericRepository<Gender>(_context);
+		public IGenericRepository<CommonData> CommonDatas => _CommonDatas ??= new GenericRepository<CommonData>(_context);
 
 		public IGenericRepository<Employee> Employees => _Employees ??= new GenericRepository<Employee>(_context);
 

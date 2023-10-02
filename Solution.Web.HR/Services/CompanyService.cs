@@ -1,6 +1,7 @@
-﻿using Solution.Web.HR.Models;
+﻿
+using Solution.Core.Models.Common.Dto;
+using Solution.Web.HR.Models;
 using Solution.Web.HR.Services.IServices;
-using System.Reflection;
 
 namespace Solution.Web.HR.Services
 {

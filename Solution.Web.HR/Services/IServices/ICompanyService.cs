@@ -1,4 +1,5 @@
-﻿using Solution.Web.HR.Models;
+﻿
+using Solution.Core.Models.Common.Dto;
 
 namespace Solution.Web.HR.Services.IServices
 {

@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Solution.Services.HRAPI.Data;
-using Solution.Services.HRAPI.Models;
 using Solution.Services.HRAPI.Repository.IRepository;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Solution.Services.HRAPI.Repository

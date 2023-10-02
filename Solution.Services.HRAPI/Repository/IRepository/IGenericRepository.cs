@@ -1,5 +1,4 @@
-﻿using Solution.Services.HRAPI.Models;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Solution.Services.HRAPI.Repository.IRepository
 {

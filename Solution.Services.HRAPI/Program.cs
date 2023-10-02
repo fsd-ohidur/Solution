@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Solution.Core.Models;
 using Solution.Services.HRAPI.Configurations;
 using Solution.Services.HRAPI.Data;
-using Solution.Services.HRAPI.Repository;
 using Solution.Services.HRAPI.Repository.IRepository;
 
 //Register start from here
