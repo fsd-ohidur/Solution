@@ -1,0 +1,152 @@
+﻿@using Solution.Core.Models.Common.Dto;
+@using Solution.Core.Models.HR.Dto;
+@model EmployeeDto
+@{
+	var title = "Edit Employee";
+	ViewData["Title"] = title;
+	CompanyDto company = ViewBag.GrossCalculationRelated;
+}
+<div class="card">
+	<div class="card-header">
+		<h3>@title</h3>
+	</div>
+	<div class="card-body">
+		<form method="post">
+			<input hidden id="BasicPercent" value="@company.Basic" />
+			<input hidden id="HRentPercent" value="@company.HRent" />
+			<input hidden id="MedicalPercent" value="@company.Medical" />
+
+			<input asp-for="Id" hidden />
+
+			<div class="row">
+				<div class="col-3">
+					<div class="form-floating mb-2">
+						<input asp-for="EmpCode" class="form-control" placeholder=" " />
+						<label asp-for="EmpCode" class="control-label"></label>
+						<span asp-validation-for="EmpCode" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-9">
+					<div class="form-floating mb-2">
+						<input asp-for="EmpName" class="form-control" placeholder=" " />
+						<label asp-for="EmpName" class="control-label"></label>
+						<span asp-validation-for="EmpName" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-floating mb-2">
+						<select asp-for="DeptId" class="form-control" asp-items="ViewBag.Departments">
+							<option disabled selected>--Select Department--</option>
+						</select>
+						<label asp-for="DeptId" class="control-label">Department</label>
+						<span asp-validation-for="DeptId" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-floating mb-2">
+						<select asp-for="DesigId" class="form-control" asp-items="ViewBag.Designations">
+							<option disabled selected>--Select Designation--</option>
+						</select>
+						<label asp-for="DesigId" class="control-label">Designation</label>
+						<span asp-validation-for="DesigId" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="col-6">
+					<div class="form-floating mb-2">
+						<select asp-for="ShiftId" class="form-control" asp-items="ViewBag.Shifts">
+							<option disabled selected>--Select Shift--</option>
+						</select>
+						<label asp-for="ShiftId" class="control-label">Shift</label>
+						<span asp-validation-for="ShiftId" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-floating mb-2">
+						<select asp-for="GenderId" class="form-control" asp-items="ViewBag.Genders">
+							<option disabled selected>--Select Gender--</option>
+						</select>
+						<label asp-for="Gender" class="control-label"></label>
+						<span asp-validation-for="Gender" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-floating mb-2">
+						<input asp-for="dtJoin" class="form-control" placeholder=" " />
+						<label asp-for="dtJoin" class="control-label"></label>
+						<span asp-validation-for="dtJoin" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="form-floating mb-2">
+						<input asp-for="Gross" class="form-control" placeholder=" " onchange="fncCalculateGrossRelated()" />
+						<label asp-for="Gross" class="control-label"></label>
+						<span asp-validation-for="Gross" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="form-floating mb-2">
+						<input asp-for="Basic" class="form-control" placeholder=" " readonly />
+						<label asp-for="Basic" class="control-label"></label>
+						<span asp-validation-for="Basic" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-2">
+					<div class="form-floating mb-2">
+						<input asp-for="HRent" class="form-control" placeholder=" " readonly />
+						<label asp-for="HRent" class="control-label"></label>
+						<span asp-validation-for="HRent" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-2">
+					<div class="form-floating mb-2">
+						<input asp-for="Medical" class="form-control" placeholder=" " readonly />
+						<label asp-for="Medical" class="control-label"></label>
+						<span asp-validation-for="Medical" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-2">
+					<div class="form-floating mb-2">
+						<input asp-for="Other" class="form-control" placeholder=" " readonly />
+						<label asp-for="Other" class="control-label"></label>
+						<span asp-validation-for="Other" class="text-danger"></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group mt-2">
+				<div class="d-flex mb-2">
+					<button type="submit" class="btn btn-lg btn-info">Update</button>
+					<a asp-action="Index" class="btn btn-lg btn-warning ms-1">Back to list</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}
+<script>
+	function fncCalculateGrossRelated() {
+		var GrossAmount = Number(document.getElementById('Gross').value);
+		var BasicPercent = Number(document.getElementById('BasicPercent').value);
+		var HRentPercent = Number(document.getElementById('HRentPercent').value);
+		var MedicalAmount = Number(document.getElementById('MedicalPercent').value);
+
+		var BasicAmount = Number(GrossAmount * BasicPercent / 100.0);
+		var HRentAmount = Number(GrossAmount * HRentPercent / 100.0);
+		var OtherAmount = GrossAmount - (BasicAmount + HRentAmount + MedicalAmount);
+
+
+
+		document.getElementById('Basic').value = BasicAmount;
+		document.getElementById('HRent').value = HRentAmount;
+		document.getElementById('Medical').value = MedicalAmount;
+		document.getElementById('Other').value = OtherAmount;
+
+	}
+</script>
+
+

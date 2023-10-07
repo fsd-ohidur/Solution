@@ -1,0 +1,25 @@
+﻿@using Solution.Core.Models.Test.Dto;
+@model IEnumerable<TestParentDto>
+
+@{
+	var title = "Test Parent List";
+	ViewData["Title"] = title;
+}
+<partial name="_Notification" />
+<div class="card">
+	<div class="card-header">
+		<div class="row">
+			<div class="col-8">
+				<h2>@title</h2>
+			</div>
+			<div class="col-4 text-end">
+				@*<a asp-action="Create" class="btn btn-success text-white mt-1"><i class="fas fa-plus"></i> Create New</a>*@
+				<a asp-action="AddOrEdit" class="btn btn-success text-white mt-1"><i class="fas fa-plus"></i> Create New</a>
+				<a onclick="showInPopup('@Url.Action("AddOrEdit","TestParent",null,Context.Request.Scheme)','New Parent')" class="btn btn-success text-white mt-1"><i class="fas fa-plus"></i> Create New</a>
+			</div>
+		</div>
+	</div>
+	<div class="card-body" id="view-all">
+		@await Html.PartialAsync("_ViewAll",Model)
+	</div>
+</div>

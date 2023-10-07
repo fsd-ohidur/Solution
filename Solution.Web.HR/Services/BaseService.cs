@@ -1,6 +1,4 @@
-﻿
-
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Solution.Core;
 using Solution.Core.Models.Common;
 using Solution.Core.Models.Common.Dto;
@@ -19,18 +17,20 @@ namespace Solution.Web.HR.Services
 			this.httpClient = httpClient;
 		}
 
-		public async Task<T> SendAsync<T> (ApiRequest apiRequest)
+		public async Task<T> SendAsync<T>(ApiRequest apiRequest)
 		{
 			try
 			{
 				var client = httpClient.CreateClient("HRAPI");
 				HttpRequestMessage message = new HttpRequestMessage();
 				message.Headers.Add("Accept", "application/json");
+				message.Headers.Add("UserId", apiRequest.UserId);
+				message.Headers.Add("ComId", apiRequest.ComId);
 				message.RequestUri = new Uri(apiRequest.url);
 				client.DefaultRequestHeaders.Clear();
-				if(apiRequest.Data!= null)
+				if (apiRequest.Data != null)
 				{
-					message.Content = new StringContent(JsonConvert.SerializeObject(apiRequest.Data),Encoding.UTF8, "application/json");
+					message.Content = new StringContent(JsonConvert.SerializeObject(apiRequest.Data), Encoding.UTF8, "application/json");
 				}
 				HttpResponseMessage apiResponse = null;
 				switch (apiRequest.ApiType)

@@ -6,21 +6,25 @@ using Solution.Core.Models.Common.Domain;
 
 namespace Solution.Core.Models.HR.Dto
 {
-
-    public class CreateDepartmentDto
+	public class CreateDesignationDto
 	{
 		[Required]
 		[StringLength(50)]
 		[DisplayName("Name")]
-		public string DeptName { get; set; }
+		public string DesigName { get; set; }
+		[Required]
+		[StringLength(50)]
+		[DisplayName("Short Name")]
+		public string DesigNameShort { get; set; }
 		[MaxLength(36)]
 		public string? ComId { get; set; }
 		[ForeignKey("ComId")]
 		[ValidateNever]
 		public Company Company { get; set; }
 	}
-	public class DepartmentDto : CreateDepartmentDto
+	public class DesignationDto : CreateDesignationDto
 	{
 		public string Id { get; set; } = Guid.NewGuid().ToString();
 	}
+	
 }

@@ -10,60 +10,63 @@ namespace Solution.Web.HR.Services
 	{
 		private readonly IHttpClientFactory _clientFactory;
 
-		public DepartmentService(IHttpClientFactory clientFactory):base(clientFactory)
+		public DepartmentService(IHttpClientFactory clientFactory) : base(clientFactory)
 		{
 			_clientFactory = clientFactory;
 		}
+		public async Task<T> GetAllAsync<T>(string ComId)
+		{
+			return await this.SendAsync<T>(new ApiRequest()
+			{
+				ApiType = SD.ApiType.GET,
+				url = SD.HRAPIBase + "/api/department",
+				AccessToken = "",
+				ComId = ComId
+			});
+		}
 
-		public async Task<T> CreateAsync<T>(DepartmentDto model)
+		public async Task<T> GetByIdAsync<T>(string ComId, Guid id)
+		{
+			return await this.SendAsync<T>(new ApiRequest()
+			{
+				ApiType = SD.ApiType.GET,
+				url = SD.HRAPIBase + "/api/department/" + id,
+				AccessToken = "",
+				ComId = ComId
+			});
+		}
+		public async Task<T> CreateAsync<T>(DepartmentDto model, string UserId)
 		{
 			return await this.SendAsync<T>(new ApiRequest()
 			{
 				ApiType = SD.ApiType.POST,
 				Data = model,
 				url = SD.HRAPIBase + "/api/department",
-				AccessToken = ""
-			}) ;
-		}
-
-		public async Task<T> DeleteAsync<T>(Guid id)
-		{
-			return await this.SendAsync<T>(new ApiRequest()
-			{
-				ApiType = SD.ApiType.DELETE,
-				url = SD.HRAPIBase + "/api/department/" + id,
-				AccessToken = ""
+				AccessToken = "",
+				UserId = UserId,
+				ComId = model.ComId
 			});
 		}
-
-		public async Task<T> GetAllAsync<T>()
-		{
-			return await this.SendAsync<T>(new ApiRequest()
-			{
-				ApiType = SD.ApiType.GET,
-				url = SD.HRAPIBase + "/api/department",
-				AccessToken = ""
-			});
-		}
-
-		public async Task<T> GetByIdAsync<T>(Guid id)
-		{
-			return await this.SendAsync<T>(new ApiRequest()
-			{
-				ApiType = SD.ApiType.GET,
-				url = SD.HRAPIBase + "/api/department/" + id,
-				AccessToken = ""
-			});
-		}
-
-		public async Task<T> UpdateAsync<T>(DepartmentDto model)
+		public async Task<T> UpdateAsync<T>(DepartmentDto model, string UserId)
 		{
 			return await this.SendAsync<T>(new ApiRequest()
 			{
 				ApiType = SD.ApiType.PUT,
 				Data = model,
 				url = SD.HRAPIBase + "/api/department",
-				AccessToken = ""
+				AccessToken = "",
+				UserId = UserId,
+				ComId = model.ComId
+			});
+		}
+		public async Task<T> DeleteAsync<T>(string ComId, Guid id)
+		{
+			return await this.SendAsync<T>(new ApiRequest()
+			{
+				ApiType = SD.ApiType.DELETE,
+				url = SD.HRAPIBase + "/api/department/" + id,
+				AccessToken = "",
+				ComId = ComId
 			});
 		}
 	}

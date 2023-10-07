@@ -1,0 +1,35 @@
+﻿@using Solution.Core.Models.Test.Dto;
+@model TestChildDto
+@{
+	var title = "Edit Test Child";
+	ViewData["Title"] = title;
+}
+<div class="card">
+	<div class="card-header">
+		<h3>@title</h3>
+	</div>
+	<div class="card-body">
+		<form method="post">
+			<div class="form-floating mb-2">
+				<input asp-for="ChildName" class="form-control" placeholder=" " readonly />
+				<label asp-for="ChildName" class="control-label"></label>
+				<span asp-validation-for="ChildName" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<select asp-for="TestParentId" class="form-control" asp-items="ViewBag.TestParentList">
+					<option disabled selected>--Select Parent--</option>
+				</select>
+				<label asp-for="TestParentId" class="control-label">Parent</label>
+				<span asp-validation-for="TestParentId" class="text-danger"></span>
+			</div>
+
+			<hr />
+			<div class="form-group mt-2">
+				<div class="d-flex mb-2">
+					<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Edit</a>
+					<a asp-action="Index" class="btn btn-lg btn-warning ms-1">Back to list</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

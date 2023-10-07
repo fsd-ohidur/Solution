@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Solution.Core.Models.Common.Domain;
 using Solution.Core.Models.HR.Domain;
+using Solution.Core.Models.Test.Domain;
 
 namespace Solution.Services.HRAPI.Data
 {
@@ -18,6 +19,8 @@ namespace Solution.Services.HRAPI.Data
 		public DbSet<Employee> Employees { get; set; }
 		public DbSet<Shift> Shifts { get; set; }
 		public DbSet<Attendance> Attendances { get; set; }
+		public DbSet<TestParent> TestParents { get; set; }
+		public DbSet<TestChild> TestChilds { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -83,13 +86,13 @@ namespace Solution.Services.HRAPI.Data
 			foreach (var entry in ChangeTracker.Entries<BaseModel>())
 			{
 				entry.Entity.LastModifiedDate = DateTime.Now;
-				entry.Entity.LastModifiedBy = "Ohid";// httpContext.Request.Cookies["UserId"].ToString();
+				//entry.Entity.LastModifiedBy = "Ohid";// httpContext.Request.Cookies["UserId"].ToString();
 
 				if (entry.State == EntityState.Added)
 				{
 					{
 						entry.Entity.CreatedDate = DateTime.Now;
-						entry.Entity.CreatedBy = "Ohid";// httpContext.Request.Cookies["UserId"].ToString();
+						//entry.Entity.CreatedBy = "Ohid";// httpContext.Request.Cookies["UserId"].ToString();
 					}
 				}
 			}

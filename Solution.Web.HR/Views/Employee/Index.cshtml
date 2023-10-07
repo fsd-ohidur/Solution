@@ -1,0 +1,59 @@
+﻿@using Solution.Core.Models.HR.Dto;
+@model IEnumerable<EmployeeDto>
+@{
+	var title = "Employee List";
+	ViewData["Title"] = title;
+}
+<partial name="_Notification" />
+<div class="card">
+	<div class="card-header">
+		<div class="row">
+			<div class="col-8">
+				<h3>@title</h3>
+			</div>
+			<div class="col-4 text-end">
+				<a asp-action="Create" class="btn btn-success text-end mt-1">Creare New</a>
+			</div>
+		</div>
+	</div>
+	<div class="card-body">
+		<table class="table table-striped table-bordered table-responsive">
+			<thead class="bg-info align-middle text-center">
+				<tr>
+					<th>@Html.DisplayNameFor(m=>m.EmpCode)</th>
+					<th>@Html.DisplayNameFor(m=>m.EmpName)</th>
+					<th>@Html.DisplayNameFor(m=>m.Gross)</th>
+					<th>@Html.DisplayNameFor(m=>m.Basic)</th>
+					<th>@Html.DisplayNameFor(m=>m.HRent)</th>
+					<th>@Html.DisplayNameFor(m=>m.Medical)</th>
+					<th>@Html.DisplayNameFor(m=>m.Other)</th>
+					<th>@Html.DisplayNameFor(m=>m.dtJoin)</th>
+					<th>
+						Action
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>@item.EmpCode</td>
+						<td>@item.EmpName</td>
+						<td>@item.Gross</td>
+						<td>@item.Basic</td>
+						<td>@item.HRent</td>
+						<td>@item.Medical</td>
+						<td>@item.Other</td>
+						<td>@item.dtJoin.ToString("dd-MMM-yyyy")</td>
+						<td>
+							<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+								<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+								<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+							</div>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>

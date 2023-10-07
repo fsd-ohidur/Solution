@@ -12,7 +12,11 @@ namespace Solution.Core.Models.HR.Domain
         [StringLength(50)]
         [DisplayName("Name")]
         public string DesigName { get; set; }
-        [MaxLength(36)]
+		[Required]
+		[StringLength(50)]
+		[DisplayName("Short Name")]
+		public string DesigNameShort { get; set; }
+		[MaxLength(36)]
         public string? ComId { get; set; }
         [ForeignKey("ComId")]
         [ValidateNever]

@@ -5,11 +5,11 @@ using Solution.Web.HR.Services.IServices;
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddHttpClient<ICompanyService,CompanyService>();
+builder.Services.AddHttpClient<IUnitOfService,UnitOfService>();
 SD.HRAPIBase = builder.Configuration["ServiceUrls:HRAPI"];
-builder.Services.AddScoped<ICompanyService,CompanyService>();
-builder.Services.AddScoped<IDepartmentService, DepartmentService>();
-builder.Services.AddScoped<IDesignationService, DesignationService>();
+builder.Services.AddScoped<IUnitOfService, UnitOfService>();
+//builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+//builder.Services.AddScoped<IDesignationService, DesignationService>();
 
 
 // Add services to the container.

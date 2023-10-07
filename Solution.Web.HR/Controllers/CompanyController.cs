@@ -6,13 +6,14 @@ using Solution.Web.HR.Services.IServices;
 
 namespace Solution.Web.HR.Controllers
 {
-    public class CompanyController : Controller
+	public class CompanyController : Controller
 	{
-		private readonly ICompanyService _Service;
+		private readonly IUnitOfService _Service;
 		private readonly IHttpContextAccessor _httpContextAccessor;
 		private string controllerName;
+		private string route = "Company";
 
-		public CompanyController(ICompanyService service, IHttpContextAccessor httpContextAccessor)
+		public CompanyController(IUnitOfService service, IHttpContextAccessor httpContextAccessor)
 		{
 			_Service = service;
 			_httpContextAccessor = httpContextAccessor;
@@ -20,8 +21,11 @@ namespace Solution.Web.HR.Controllers
 		}
 		public async Task<IActionResult> Index()
 		{
+			var ComId = Request.Cookies["ComId"];
+			var UserId = Request.Cookies["UserId"];
+
 			List<CompanyDto> list = new();
-			var response = await _Service.GetAllAsync<ResponseDto>();
+			var response = await _Service.Companies.GetAllAsync(ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				list = JsonConvert.DeserializeObject<List<CompanyDto>>(Convert.ToString(response.Result));
@@ -30,9 +34,12 @@ namespace Solution.Web.HR.Controllers
 		}
 
 		// GET: CompanysController/Details/5
-		public async Task<IActionResult> Details(Guid id)
+		public async Task<IActionResult> Details(string id)
 		{
-			var model = await _Service.GetByIdAsync<CompanyDto>(id);
+			var ComId = Request.Cookies["ComId"];
+			var UserId = Request.Cookies["UserId"];
+
+			var model = await _Service.Companies.GetByIdAsync(id,ComId, UserId, route);
 			if (model == null)
 			{
 				return NotFound();
@@ -53,7 +60,10 @@ namespace Solution.Web.HR.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var response = await _Service.CreateAsync<ResponseDto>(model);
+				var ComId = Request.Cookies["ComId"];
+				var UserId = Request.Cookies["UserId"];
+
+				var response = await _Service.Companies.CreateAsync(model,ComId, UserId, route);
 				if (response != null && response.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} created successfully.";
@@ -64,9 +74,12 @@ namespace Solution.Web.HR.Controllers
 		}
 
 		// GET: CompanysController/Edit/5
-		public async Task<IActionResult> Edit(Guid id)
+		public async Task<IActionResult> Edit(string id)
 		{
-			var response = await _Service.GetByIdAsync<ResponseDto>(id);
+			var ComId = Request.Cookies["ComId"];
+			var UserId = Request.Cookies["UserId"];
+
+			var response = await _Service.Companies.GetByIdAsync(id,ComId, UserId, route); ;
 			if (response != null && response.IsSuccess)
 			{
 				CompanyDto model = JsonConvert.DeserializeObject<CompanyDto>(Convert.ToString(response.Result));
@@ -82,7 +95,10 @@ namespace Solution.Web.HR.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var response = await _Service.UpdateAsync<ResponseDto>(model);
+				var ComId = Request.Cookies["ComId"];
+				var UserId = Request.Cookies["UserId"];
+
+				var response = await _Service.Companies.UpdateAsync(model,ComId, UserId, route);
 				if (response != null && response.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} updated successfully.";
@@ -93,9 +109,12 @@ namespace Solution.Web.HR.Controllers
 		}
 
 		// GET: CompanysController/Delete/5
-		public async Task<IActionResult> Delete(Guid id)
+		public async Task<IActionResult> Delete(string id)
 		{
-			var response = await _Service.GetByIdAsync<ResponseDto>(id);
+			var ComId = Request.Cookies["ComId"];
+			var UserId = Request.Cookies["UserId"];
+
+			var response = await _Service.Companies.GetByIdAsync(id, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				CompanyDto model = JsonConvert.DeserializeObject<CompanyDto>(Convert.ToString(response.Result));
@@ -109,8 +128,11 @@ namespace Solution.Web.HR.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Delete(CompanyDto model)
 		{
-			var response = await _Service.DeleteAsync<ResponseDto>(Guid.Parse(model.Id));
-			if(response.IsSuccess)
+			var ComId = Request.Cookies["ComId"];
+			var UserId = Request.Cookies["UserId"];
+
+			var response = await _Service.Companies.DeleteAsync(model.Id, ComId, UserId, route);
+			if (response.IsSuccess)
 			{
 				TempData["Success"] = $"{controllerName} deleted successfully.";
 				return RedirectToAction(nameof(Index));

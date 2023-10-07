@@ -1,0 +1,126 @@
+﻿@using Solution.Core.Models.Common.Dto;
+@using Solution.Core.Models.HR.Dto;
+@model EmployeeDto
+@{
+	var title = "Delete Employee";
+	ViewData["Title"] = title;
+	CompanyDto company = ViewBag.GrossCalculationRelated;
+}
+<div class="card">
+	<div class="card-header bg-danger">
+		<h3 class="text-white">@title</h3>
+	</div>
+	<div class="card-body">
+		<form method="post">
+			<input asp-for="Id" hidden />
+			<input asp-for="ComId" hidden />
+
+			<div class="row">
+				<div class="col-3">
+					<div class="form-floating mb-2">
+						<input asp-for="EmpCode" class="form-control" placeholder=" " readonly/>
+						<label asp-for="EmpCode" class="control-label"></label>
+						<span asp-validation-for="EmpCode" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-9">
+					<div class="form-floating mb-2">
+						<input asp-for="EmpName" class="form-control" placeholder=" " readonly />
+						<label asp-for="EmpName" class="control-label"></label>
+						<span asp-validation-for="EmpName" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-floating mb-2">
+						<select asp-for="DeptId" class="form-control" asp-items="ViewBag.Departments" readonly>
+							<option disabled selected>--Select Department--</option>
+						</select>
+						<label asp-for="DeptId" class="control-label">Department</label>
+						<span asp-validation-for="DeptId" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-floating mb-2">
+						<select asp-for="DesigId" class="form-control" asp-items="ViewBag.Designations" readonly>
+							<option disabled selected>--Select Designation--</option>
+						</select>
+						<label asp-for="DesigId" class="control-label">Designation</label>
+						<span asp-validation-for="DesigId" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="col-6">
+					<div class="form-floating mb-2">
+						<select asp-for="ShiftId" class="form-control" asp-items="ViewBag.Shifts" readonly>
+							<option disabled selected>--Select Shift--</option>
+						</select>
+						<label asp-for="ShiftId" class="control-label">Shift</label>
+						<span asp-validation-for="ShiftId" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-floating mb-2">
+						<select asp-for="GenderId" class="form-control" asp-items="ViewBag.Genders" readonly>
+							<option disabled selected>--Select Gender--</option>
+						</select>
+						<label asp-for="Gender" class="control-label"></label>
+						<span asp-validation-for="Gender" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-floating mb-2">
+						<input asp-for="dtJoin" class="form-control" placeholder=" " readonly />
+						<label asp-for="dtJoin" class="control-label"></label>
+						<span asp-validation-for="dtJoin" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="form-floating mb-2">
+						<input asp-for="Gross" class="form-control" placeholder=" " onchange="fncCalculateGrossRelated()" readonly />
+						<label asp-for="Gross" class="control-label"></label>
+						<span asp-validation-for="Gross" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="form-floating mb-2">
+						<input asp-for="Basic" class="form-control" placeholder=" " readonly />
+						<label asp-for="Basic" class="control-label"></label>
+						<span asp-validation-for="Basic" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-2">
+					<div class="form-floating mb-2">
+						<input asp-for="HRent" class="form-control" placeholder=" " readonly />
+						<label asp-for="HRent" class="control-label"></label>
+						<span asp-validation-for="HRent" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-2">
+					<div class="form-floating mb-2">
+						<input asp-for="Medical" class="form-control" placeholder=" " readonly />
+						<label asp-for="Medical" class="control-label"></label>
+						<span asp-validation-for="Medical" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-2">
+					<div class="form-floating mb-2">
+						<input asp-for="Other" class="form-control" placeholder=" " readonly />
+						<label asp-for="Other" class="control-label"></label>
+						<span asp-validation-for="Other" class="text-danger"></span>
+					</div>
+				</div>
+			</div>			
+
+			<div class="form-group mt-2">
+				<div class="d-flex mb-2">
+					<button type="submit" class="btn btn-lg btn-danger">Delete</button>
+					<a asp-action="Index" class="btn btn-lg btn-info ms-1">Back to list</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+

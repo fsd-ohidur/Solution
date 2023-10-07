@@ -1,0 +1,46 @@
+﻿@using Solution.Core.Models.HR.Dto;
+@model CreateShiftDto
+@{
+	var title = "Create Shift";
+	ViewData["Title"] = title;
+}
+<div class="card">
+	<div class="card-header">
+		<h3>@title</h3>
+	</div>
+	<div class="card-body">
+		<form method="post">
+			<div class="form-floating mb-2">
+				<input asp-for="ShiftName" class="form-control" placeholder=" " />
+				<label asp-for="ShiftName" class="control-label"></label>
+				<span asp-validation-for="ShiftName" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="TimeIn" class="form-control" placeholder=" " />
+				<label asp-for="TimeIn" class="control-label"></label>
+				<span asp-validation-for="TimeIn" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="TimeOut" class="form-control" placeholder=" " />
+				<label asp-for="TimeOut" class="control-label"></label>
+				<span asp-validation-for="TimeOut" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="TimeLate" class="form-control" placeholder=" " />
+				<label asp-for="TimeLate" class="control-label"></label>
+				<span asp-validation-for="TimeLate" class="text-danger"></span>
+			</div>
+			<div class="form-group mt-2">
+				<div class="d-flex mb-2">
+					<button type="submit" class="btn btn-lg btn-success">Create</button>
+					<a asp-action="Index" class="btn btn-lg btn-warning ms-1">Back to list</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

@@ -24,11 +24,11 @@ namespace Solution.Services.HRAPI.Controllers
 		}
 
 		[HttpGet]
-		public async Task<object> Get()
+		public async Task<object> GetAsync()
 		{
 			try
 			{
-				IEnumerable<Company> model = await _unitOfWork.Companies.GetAllAsync();
+				IEnumerable<Company> model = await _unitOfWork.Companies.GetAllAsync(orderBy:x=>x.OrderBy(y=>y.ComName));
 				_response.Result = _mapper.Map<List<CompanyDto>>(model);
 			}
 			catch (Exception ex)
@@ -62,7 +62,14 @@ namespace Solution.Services.HRAPI.Controllers
 		{
 			try
 			{
+				//Getting data from http client header -- UserId
+				HttpContext.Request.Headers.TryGetValue("UserId", out var UserId);
+				
 				var data = _mapper.Map<CreateCompanyDto, Company>(model);
+
+				data.CreatedBy = UserId;
+				data.LastModifiedBy = UserId;
+
 				await _unitOfWork.Companies.CreateAsync(data);
 				await _unitOfWork.SaveAsync();
 				_response.Result = _mapper.Map<Company, CreateCompanyDto>(data);
@@ -71,6 +78,8 @@ namespace Solution.Services.HRAPI.Controllers
 			{
 				_response.IsSuccess = false;
 				_response.ErrorMessages = new List<string>() { ex.ToString() };
+				_logger.LogError(ex, $"Something went wrong in the {nameof(CreateAsync)}");
+				return StatusCode(500, "Internal server error");
 			}
 			return _response;
 		}
@@ -80,12 +89,19 @@ namespace Solution.Services.HRAPI.Controllers
 		{
 			try
 			{
+				//Getting data from http client header -- UserId
+				HttpContext.Request.Headers.TryGetValue("UserId", out var UserId);
+
 				var data = _mapper.Map<CompanyDto, Company>(model);
+
+				data.CreatedBy = UserId;
+				data.LastModifiedBy = UserId;
+
 				var existingData = await _unitOfWork.Companies.GetAsync(x=>x.Id==model.Id);
 				if (existingData != null)
 				{
-					data.CreatedDate = existingData.CreatedDate;
 					data.CreatedBy = existingData.CreatedBy;
+					data.CreatedDate = existingData.CreatedDate;
 				}
 
 				_unitOfWork.Companies.UpdateAsync(data);
@@ -96,6 +112,8 @@ namespace Solution.Services.HRAPI.Controllers
 			{
 				_response.IsSuccess = false;
 				_response.ErrorMessages = new List<string>() { ex.ToString() };
+				_logger.LogError(ex, $"Something went wrong in the {nameof(UpdateAsync)}");
+				return StatusCode(500, "Internal server error");
 			}
 			return _response;
 		}
@@ -119,6 +137,8 @@ namespace Solution.Services.HRAPI.Controllers
 			{
 				_response.IsSuccess = false;
 				_response.ErrorMessages = new List<string>() { ex.ToString() };
+				_logger.LogError(ex, $"Something went wrong in the {nameof(DeleteAsync)}");
+				return StatusCode(500, "Internal server error");
 			}
 			return _response;
 		}

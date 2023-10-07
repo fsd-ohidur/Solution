@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Solution.Core.Models.Common.Dto;
 using Solution.Core.Models.HR.Dto;
@@ -9,12 +8,12 @@ namespace Solution.Web.HR.Controllers
 {
 	public class DepartmentController : Controller
 	{
-		private readonly IDepartmentService _Service;
+		private readonly IUnitOfService _Service;
 		private readonly IHttpContextAccessor _httpContextAccessor;
 		private string controllerName;
+		private string route = "Department";
 
-
-		public DepartmentController(IDepartmentService service, IHttpContextAccessor httpContextAccessor)
+		public DepartmentController(IUnitOfService service, IHttpContextAccessor httpContextAccessor)
 		{
 			_Service = service;
 			_httpContextAccessor = httpContextAccessor;
@@ -22,8 +21,15 @@ namespace Solution.Web.HR.Controllers
 		}
 		public async Task<IActionResult> Index()
 		{
+			if (!Request.Cookies.ContainsKey("ComId"))
+			{
+				return RedirectToAction(nameof(Index), "Home");
+			}
+			var ComId = Request.Cookies["ComId"];
+			var UserId = Request.Cookies["UserId"];
+
 			List<DepartmentDto> list = new();
-			var response = await _Service.GetAllAsync<ResponseDto>();
+			var response = await _Service.Departments.GetAllAsync(ComId,UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				list = JsonConvert.DeserializeObject<List<DepartmentDto>>(Convert.ToString(response.Result));
@@ -32,9 +38,11 @@ namespace Solution.Web.HR.Controllers
 		}
 
 		// GET: DepartmentsController/Details/5
-		public async Task<IActionResult> Details(Guid id)
+		public async Task<IActionResult> Details(string id)
 		{
-			var model = await _Service.GetByIdAsync<DepartmentDto>(id);
+			var ComId = Request.Cookies["ComId"];
+			var UserId = Request.Cookies["UserId"];
+			var model = await _Service.Departments.GetByIdAsync(id,ComId,UserId, route);
 			if (model == null)
 			{
 				return NotFound();
@@ -55,9 +63,11 @@ namespace Solution.Web.HR.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				model.ComId = Request.Cookies["ComId"].ToString();
+				string ComId = Request.Cookies["ComId"].ToString();
+				string UserId = Request.Cookies["UserId"].ToString();
 
-				var response = await _Service.CreateAsync<ResponseDto>(model);
+				model.ComId = ComId;
+				var response = await _Service.Departments.CreateAsync(model,ComId,UserId, route);
 				if (response != null && response.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} created successfully.";
@@ -68,9 +78,12 @@ namespace Solution.Web.HR.Controllers
 		}
 
 		// GET: DepartmentsController/Edit/5
-		public async Task<IActionResult> Edit(Guid id)
+		public async Task<IActionResult> Edit(string id)
 		{
-			var response = await _Service.GetByIdAsync<ResponseDto>(id);
+			var ComId = Request.Cookies["ComId"].ToString();
+			string UserId = Request.Cookies["UserId"].ToString();
+
+			var response = await _Service.Departments.GetByIdAsync(id, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				DepartmentDto model = JsonConvert.DeserializeObject<DepartmentDto>(Convert.ToString(response.Result));
@@ -86,9 +99,11 @@ namespace Solution.Web.HR.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				model.ComId = Request.Cookies["ComId"].ToString();
+				var ComId = Request.Cookies["ComId"].ToString();
+				string UserId = Request.Cookies["UserId"].ToString();
 
-				var response = await _Service.UpdateAsync<ResponseDto>(model);
+				model.ComId = ComId;
+				var response = await _Service.Departments.UpdateAsync(model, ComId, UserId, route);
 				if (response != null && response.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} updated successfully.";
@@ -99,9 +114,12 @@ namespace Solution.Web.HR.Controllers
 		}
 
 		// GET: DepartmentsController/Delete/5
-		public async Task<IActionResult> Delete(Guid id)
+		public async Task<IActionResult> Delete(string id)
 		{
-			var response = await _Service.GetByIdAsync<ResponseDto>(id);
+			var ComId = Request.Cookies["ComId"];
+			string UserId = Request.Cookies["UserId"].ToString();
+
+			var response = await _Service.Departments.GetByIdAsync(id, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				DepartmentDto model = JsonConvert.DeserializeObject<DepartmentDto>(Convert.ToString(response.Result));
@@ -115,8 +133,11 @@ namespace Solution.Web.HR.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Delete(DepartmentDto model)
 		{
-			var response = await _Service.DeleteAsync<ResponseDto>(Guid.Parse(model.Id));
-			if(response.IsSuccess)
+			var ComId = Request.Cookies["ComId"];
+			string UserId = Request.Cookies["UserId"].ToString();
+
+			var response = await _Service.Departments.DeleteAsync(model.Id, ComId, UserId, route);
+			if (response.IsSuccess)
 			{
 				TempData["Success"] = $"{controllerName} deleted successfully.";
 				return RedirectToAction(nameof(Index));

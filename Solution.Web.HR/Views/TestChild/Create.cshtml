@@ -1,0 +1,76 @@
+﻿@using Solution.Core.Models.Test.Dto;
+@model CreateTestChildDto
+@{
+	var title = "Create Test Child";
+	ViewData["Title"] = title;
+}
+
+<div class="card">
+	<div class="card-header">
+		<h2>@title</h2>
+	</div>
+	<div class="card-body">
+		<form method="post">
+			<div class="form-floating mb-2">
+				<input asp-for="ChildName" class="form-control" placeholder=" " />
+				<label asp-for="ChildName" class="control-label"></label>
+				<span asp-validation-for="ChildName" class="text-danger"></span>
+			</div>
+			<div class="btn-group" style="width:100%">
+				<div class="form-group" style="width:90%">
+					<div class="form-floating mb-2">
+						<select asp-for="TestParentId" class="form-control" asp-items="ViewBag.TestParentList">
+							<option disabled selected>--Select Parent--</option>
+						</select>
+						<label asp-for="TestParentId" class="control-label">Parent</label>
+						<span asp-validation-for="TestParentId" class="text-danger"></span>
+					</div>
+				</div>
+				<div style="width:10%;display:flex;justify-content:center;">
+					<a asp-action="Create" asp-controller="TestParent" id="btnAddParent" class="btn btn-success text-white pt-3" style="width:70%;height:90%">
+						<i class="fas fa-plus"></i> Add</a>
+				</div>
+			</div>
+
+			<hr />
+			<div class="form-group mt-2">
+				<div class="d-flex mb-2">
+					<button type="submit" class="btn btn-lg btn-success">Create</button>
+					<a asp-action="Index" class="btn btn-lg btn-warning ms-1">Back to list</a>
+				</div>
+			</div>
+		</form>
+
+		<!-- Modal -->
+		<div class="modal fade" id="modalAddParent" tabindex="-1" role="dialog" aria-labelledby="YourModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="YourModalLabel">Create Parent</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<!-- Include your partial view for the form here -->
+						@await Html.PartialAsync("YourPartialViewName")
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<script>
+	$(document).ready(function () {
+		$("#btnAddParent").click(function () {
+			$("#modalAddParent").modal("show");
+        });
+    });
+</script>
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

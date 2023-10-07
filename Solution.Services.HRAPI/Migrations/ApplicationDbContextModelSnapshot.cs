@@ -17,12 +17,104 @@ namespace Solution.Services.HRAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Solution.Services.HRAPI.Domain.Attendance", b =>
+            modelBuilder.Entity("Solution.Core.Models.Common.Domain.CommonData", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("ComId")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("CommonName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("CommonType")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComId");
+
+                    b.ToTable("CommonDatas");
+                });
+
+            modelBuilder.Entity("Solution.Core.Models.Common.Domain.Company", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<int>("Basic")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ComName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HRent")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsInactive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Medical")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComName")
+                        .IsUnique();
+
+                    b.ToTable("Companies");
+                });
+
+            modelBuilder.Entity("Solution.Core.Models.HR.Domain.Attendance", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -76,99 +168,7 @@ namespace Solution.Services.HRAPI.Migrations
                     b.ToTable("Attendances");
                 });
 
-            modelBuilder.Entity("Solution.Services.HRAPI.Domain.CommonData", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)")
-                        .HasColumnOrder(1);
-
-                    b.Property<string>("ComId")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("CommonName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("CommonType")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComId");
-
-                    b.ToTable("CommonDatas");
-                });
-
-            modelBuilder.Entity("Solution.Services.HRAPI.Domain.Company", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)")
-                        .HasColumnOrder(1);
-
-                    b.Property<int>("Basic")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ComName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("HRent")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsInactive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastModifiedBy")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Medical")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComName")
-                        .IsUnique();
-
-                    b.ToTable("Companies");
-                });
-
-            modelBuilder.Entity("Solution.Services.HRAPI.Domain.Department", b =>
+            modelBuilder.Entity("Solution.Core.Models.HR.Domain.Department", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -193,6 +193,11 @@ namespace Solution.Services.HRAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("DeptNameShort")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
                     b.Property<string>("LastModifiedBy")
                         .IsRequired()
                         .HasMaxLength(36)
@@ -209,7 +214,7 @@ namespace Solution.Services.HRAPI.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("Solution.Services.HRAPI.Domain.Designation", b =>
+            modelBuilder.Entity("Solution.Core.Models.HR.Domain.Designation", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -234,6 +239,11 @@ namespace Solution.Services.HRAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("DesigNameShort")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("LastModifiedBy")
                         .IsRequired()
                         .HasMaxLength(36)
@@ -250,7 +260,7 @@ namespace Solution.Services.HRAPI.Migrations
                     b.ToTable("Designations");
                 });
 
-            modelBuilder.Entity("Solution.Services.HRAPI.Domain.Employee", b =>
+            modelBuilder.Entity("Solution.Core.Models.HR.Domain.Employee", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -336,7 +346,7 @@ namespace Solution.Services.HRAPI.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Solution.Services.HRAPI.Domain.Shift", b =>
+            modelBuilder.Entity("Solution.Core.Models.HR.Domain.Shift", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -386,15 +396,110 @@ namespace Solution.Services.HRAPI.Migrations
                     b.ToTable("Shifts");
                 });
 
-            modelBuilder.Entity("Solution.Services.HRAPI.Domain.Attendance", b =>
+            modelBuilder.Entity("Solution.Core.Models.Test.Domain.TestChild", b =>
                 {
-                    b.HasOne("Solution.Services.HRAPI.Domain.Company", "Company")
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("ChildName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ComId")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ParentId")
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("TestParentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComId");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("TestChilds");
+                });
+
+            modelBuilder.Entity("Solution.Core.Models.Test.Domain.TestParent", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("ComId")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ParentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComId");
+
+                    b.ToTable("TestParents");
+                });
+
+            modelBuilder.Entity("Solution.Core.Models.Common.Domain.CommonData", b =>
+                {
+                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("ComId");
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("Solution.Core.Models.HR.Domain.Attendance", b =>
+                {
+                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
                         .WithMany()
                         .HasForeignKey("ComId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Solution.Services.HRAPI.Domain.Employee", "Employee")
+                    b.HasOne("Solution.Core.Models.HR.Domain.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmpId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -405,18 +510,9 @@ namespace Solution.Services.HRAPI.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("Solution.Services.HRAPI.Domain.CommonData", b =>
+            modelBuilder.Entity("Solution.Core.Models.HR.Domain.Department", b =>
                 {
-                    b.HasOne("Solution.Services.HRAPI.Domain.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("ComId");
-
-                    b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("Solution.Services.HRAPI.Domain.Department", b =>
-                {
-                    b.HasOne("Solution.Services.HRAPI.Domain.Company", "Company")
+                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
                         .WithMany()
                         .HasForeignKey("ComId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -425,9 +521,9 @@ namespace Solution.Services.HRAPI.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("Solution.Services.HRAPI.Domain.Designation", b =>
+            modelBuilder.Entity("Solution.Core.Models.HR.Domain.Designation", b =>
                 {
-                    b.HasOne("Solution.Services.HRAPI.Domain.Company", "Company")
+                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
                         .WithMany()
                         .HasForeignKey("ComId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -436,32 +532,32 @@ namespace Solution.Services.HRAPI.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("Solution.Services.HRAPI.Domain.Employee", b =>
+            modelBuilder.Entity("Solution.Core.Models.HR.Domain.Employee", b =>
                 {
-                    b.HasOne("Solution.Services.HRAPI.Domain.Company", "Company")
+                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
                         .WithMany()
                         .HasForeignKey("ComId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Solution.Services.HRAPI.Domain.Department", "Department")
+                    b.HasOne("Solution.Core.Models.HR.Domain.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DeptId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Solution.Services.HRAPI.Domain.Designation", "Designation")
+                    b.HasOne("Solution.Core.Models.HR.Domain.Designation", "Designation")
                         .WithMany()
                         .HasForeignKey("DesigId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Solution.Services.HRAPI.Domain.CommonData", "Gender")
+                    b.HasOne("Solution.Core.Models.Common.Domain.CommonData", "Gender")
                         .WithMany()
                         .HasForeignKey("GenderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Solution.Services.HRAPI.Domain.Shift", "Shift")
+                    b.HasOne("Solution.Core.Models.HR.Domain.Shift", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -478,13 +574,37 @@ namespace Solution.Services.HRAPI.Migrations
                     b.Navigation("Shift");
                 });
 
-            modelBuilder.Entity("Solution.Services.HRAPI.Domain.Shift", b =>
+            modelBuilder.Entity("Solution.Core.Models.HR.Domain.Shift", b =>
                 {
-                    b.HasOne("Solution.Services.HRAPI.Domain.Company", "Company")
+                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
                         .WithMany()
                         .HasForeignKey("ComId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("Solution.Core.Models.Test.Domain.TestChild", b =>
+                {
+                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("ComId");
+
+                    b.HasOne("Solution.Core.Models.Test.Domain.TestParent", "TestParent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("TestParent");
+                });
+
+            modelBuilder.Entity("Solution.Core.Models.Test.Domain.TestParent", b =>
+                {
+                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("ComId");
 
                     b.Navigation("Company");
                 });
