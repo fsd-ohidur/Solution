@@ -29,7 +29,6 @@ namespace Solution.Services.HRAPI.Repository
 		{
 			_dbSet.Remove(entity);
 		}
-
 		public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> expression=null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy=null, List<string> includes=null)
 		{
 			IQueryable<T> query = _dbSet;
@@ -72,7 +71,5 @@ namespace Solution.Services.HRAPI.Repository
 		{
 			await _Context.Database.ExecuteSqlRawAsync(param);
 		}
-
-
 	}
 }

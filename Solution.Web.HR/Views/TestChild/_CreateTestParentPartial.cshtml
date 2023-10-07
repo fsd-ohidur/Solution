@@ -1,0 +1,69 @@
+﻿@using Solution.Core.Models.Test.Dto;
+@model CreateTestParentDto
+
+@{
+	var title = "Create Test Parent";
+	ViewData["Title"] = title;
+}
+
+<div class="card">
+	<div class="card-header">
+		<h2>@title</h2>
+	</div>
+	<div class="card-body">
+		<form method="post">
+			<div class="form-floating mb-2">
+				<input asp-for="ParentName" class="form-control" placeholder=" " />
+				<label asp-for="ParentName" class="control-label"></label>
+				<span asp-validation-for="ParentName" class="text-danger"></span>
+			</div>
+			<hr />
+			<div class="form-group mt-2">
+				<div class="d-flex mb-2">
+					<button type="submit" class="btn btn-lg btn-success">Create</button>
+					<a asp-action="Index" class="btn btn-lg btn-warning ms-1">Back to list</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btnAddParent").click(function () {
+            // Load the TestParent creation form into the modal placeholder
+            $.get("/TestParent/Create", function (data) {
+                $("#addParentModalPlaceholder").html(data);
+            });
+
+            // Show the modal
+            $("#modalAddParent").modal("show");
+        });
+
+        // Handle the submission of the TestParent creation form
+        $(document).on("submit", "#createTestParentForm", function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "/TestParent/Create",
+                type: "POST",
+                data: $(this).serialize(),
+                success: function (result) {
+                    if (result.success) {
+                        // Close the modal
+                        $("#modalAddParent").modal("hide");
+                        // You can update the dropdown list or take other actions as needed
+                    } else {
+                        // Display validation errors if any
+                        $("#addParentModalPlaceholder").html(result);
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

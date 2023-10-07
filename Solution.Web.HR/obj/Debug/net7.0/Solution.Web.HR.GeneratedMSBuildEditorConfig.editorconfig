@@ -344,6 +344,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVzdENoaWxkXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Design/Projects/Solution/Solution.Web.HR/Views/TestChild/_CreateTestParentPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVzdENoaWxkXF9DcmVhdGVUZXN0UGFyZW50UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Design/Projects/Solution/Solution.Web.HR/Views/TestParent1/AddOrEdit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVzdFBhcmVudDFcQWRkT3JFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
