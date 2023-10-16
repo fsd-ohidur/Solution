@@ -71,12 +71,24 @@ namespace Solution.Web.HR.Services
 			}
 		}
 
-		public async Task<TResult> GetAllAsync(string ComId, string UserId, string route)
+		public async Task<TResult> GetAllAsync(string APIBase, string ComId, string UserId, string route)
 		{
 			var apiRequest = new ApiRequest()
 			{
 				ApiType = SD.ApiType.GET,
-				url = SD.HRAPIBase + $"/api/{route}",
+				url = $"{APIBase}/api/{route}",
+				AccessToken = "",
+				UserId = UserId,
+				ComId = ComId
+			};
+			return await SendAsync<TResult>(apiRequest);
+		}
+		public async Task<TResult> GetCompanyAsync(string APIBase, string ComId, string UserId, string route)
+		{
+			var apiRequest = new ApiRequest()
+			{
+				ApiType = SD.ApiType.GET,
+				url = $"{APIBase}/api/{route}",
 				AccessToken = "",
 				UserId = UserId,
 				ComId = ComId
@@ -84,50 +96,50 @@ namespace Solution.Web.HR.Services
 			return await SendAsync<TResult>(apiRequest);
 		}
 
-		public async Task<TResult> GetByIdAsync(string id, string ComId, string UserId, string route)
+		public async Task<TResult> GetByIdAsync(string APIBase, string id, string ComId, string UserId, string route)
 		{
 			var apiRequest = new ApiRequest()
 			{
 				ApiType = SD.ApiType.GET,
-				url = SD.HRAPIBase + $"/api/{route}/" + id,
+				url = $"{APIBase}/api/{route}/" + id,
 				AccessToken = "",
 				UserId = UserId,
 				ComId = ComId
 			};
 			return await SendAsync<TResult>(apiRequest);
 		}
-		public async Task<TResult> CreateAsync(T model, string ComId, string UserId, string route)
+		public async Task<TResult> CreateAsync(string APIBase, T model, string ComId, string UserId, string route)
 		{
 			var apiRequest = new ApiRequest()
 			{
 				ApiType = SD.ApiType.POST,
 				Data = model,
-				url = SD.HRAPIBase + $"/api/{route}",
+				url = $"{APIBase}/api/{route}",
 				AccessToken = "",
 				UserId = UserId,
 				ComId = ComId
 			};
 			return await SendAsync<TResult>(apiRequest);
 		}
-		public async Task<TResult> UpdateAsync(T model, string ComId, string UserId, string route)
+		public async Task<TResult> UpdateAsync(string APIBase, T model, string ComId, string UserId, string route)
 		{
 			var apiRequest = new ApiRequest()
 			{
 				ApiType = SD.ApiType.PUT,
 				Data = model,
-				url = SD.HRAPIBase + $"/api/{route}",
+				url = $"{APIBase}/api/{route}",
 				AccessToken = "",
 				UserId = UserId,
 				ComId = ComId
 			};
 			return await SendAsync<TResult>(apiRequest);
 		}
-		public async Task<TResult> DeleteAsync(string id, string ComId, string UserId, string route)
+		public async Task<TResult> DeleteAsync(string APIBase, string id, string ComId, string UserId, string route)
 		{
 			var apiRequest = new ApiRequest()
 			{
 				ApiType = SD.ApiType.DELETE,
-				url = SD.HRAPIBase + $"/api/{route}/" + id,
+				url = $"{APIBase}/api/{route}/" + id,
 				AccessToken = "",
 				UserId = UserId,
 				ComId = ComId

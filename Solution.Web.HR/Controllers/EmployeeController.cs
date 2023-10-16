@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Solution.Core;
 using Solution.Core.Models.Common.Dto;
 using Solution.Core.Models.HR.Dto;
 using Solution.Web.HR.Services.IServices;
@@ -31,7 +32,7 @@ namespace Solution.Web.HR.Controllers
 			var UserId = Request.Cookies["UserId"];
 
 			List<EmployeeDto> list = new();
-			var response = await _Service.Employees.GetAllAsync(ComId, UserId, route);
+			var response = await _Service.Employees.GetAllAsync(SD.HRAPIBase, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				list = JsonConvert.DeserializeObject<List<EmployeeDto>>(Convert.ToString(response.Result));
@@ -44,7 +45,7 @@ namespace Solution.Web.HR.Controllers
 		{
 			var ComId = Request.Cookies["ComId"];
 			var UserId = Request.Cookies["UserId"];
-			var model = await _Service.Employees.GetByIdAsync(id, ComId, UserId, route);
+			var model = await _Service.Employees.GetByIdAsync(SD.HRAPIBase, id, ComId, UserId, route);
 			if (model == null)
 			{
 				return NotFound();
@@ -64,27 +65,27 @@ namespace Solution.Web.HR.Controllers
 			List<ShiftDto> ShiftList = new();
 			List<CommonDataDto> CommonDataList = new();
 
-			var response = await _Service.Companies.GetByIdAsync(ComId, ComId, UserId, "Company");
+			var response = await _Service.Companies.GetByIdAsync(SD.HRAPIBase, ComId, ComId, UserId, "Company");
 			if (response != null && response.IsSuccess)
 			{
 				CompanyData = JsonConvert.DeserializeObject<CompanyDto>(Convert.ToString(response.Result));
 			}
-			response = await _Service.Departments.GetAllAsync(ComId, UserId, "Department");
+			response = await _Service.Departments.GetAllAsync(SD.HRAPIBase, ComId, UserId, "Department");
 			if (response != null && response.IsSuccess)
 			{
 				DepartmentList = JsonConvert.DeserializeObject<List<DepartmentDto>>(Convert.ToString(response.Result));
 			}
-			response = await _Service.Designations.GetAllAsync(ComId, UserId, "Designation");
+			response = await _Service.Designations.GetAllAsync(SD.HRAPIBase, ComId, UserId, "Designation");
 			if (response != null && response.IsSuccess)
 			{
 				DesignationList = JsonConvert.DeserializeObject<List<DesignationDto>>(Convert.ToString(response.Result));
 			}
-			response = await _Service.Shifts.GetAllAsync(ComId, UserId, "Shift");
+			response = await _Service.Shifts.GetAllAsync(SD.HRAPIBase, ComId, UserId, "Shift");
 			if (response != null && response.IsSuccess)
 			{
 				ShiftList = JsonConvert.DeserializeObject<List<ShiftDto>>(Convert.ToString(response.Result));
 			}
-			response = await _Service.CommonDatas.GetAllAsync(ComId, UserId, "CommonData");
+			response = await _Service.CommonDatas.GetAllAsync(SD.HRAPIBase, ComId, UserId, "CommonData");
 			if (response != null && response.IsSuccess)
 			{
 				CommonDataList = JsonConvert.DeserializeObject<List<CommonDataDto>>(Convert.ToString(response.Result));
@@ -110,7 +111,7 @@ namespace Solution.Web.HR.Controllers
 			if (ModelState.IsValid)
 			{
 				model.ComId = ComId;
-				var response1 = await _Service.Employees.CreateAsync(model, ComId, UserId, route);
+				var response1 = await _Service.Employees.CreateAsync(SD.HRAPIBase, model, ComId, UserId, route);
 				if (response1 != null && response1.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} created successfully.";
@@ -124,27 +125,27 @@ namespace Solution.Web.HR.Controllers
 			List<ShiftDto> ShiftList = new();
 			List<CommonDataDto> CommonDataList = new();
 
-			var response = await _Service.Companies.GetByIdAsync(ComId, ComId, UserId, "Company");
+			var response = await _Service.Companies.GetByIdAsync(SD.HRAPIBase, ComId, ComId, UserId, "Company");
 			if (response != null && response.IsSuccess)
 			{
 				CompanyData = JsonConvert.DeserializeObject<CompanyDto>(Convert.ToString(response.Result));
 			}
-			response = await _Service.Departments.GetAllAsync(ComId, UserId, "Department");
+			response = await _Service.Departments.GetAllAsync(SD.HRAPIBase, ComId, UserId, "Department");
 			if (response != null && response.IsSuccess)
 			{
 				DepartmentList = JsonConvert.DeserializeObject<List<DepartmentDto>>(Convert.ToString(response.Result));
 			}
-			response = await _Service.Designations.GetAllAsync(ComId, UserId, "Designation");
+			response = await _Service.Designations.GetAllAsync(SD.HRAPIBase, ComId, UserId, "Designation");
 			if (response != null && response.IsSuccess)
 			{
 				DesignationList = JsonConvert.DeserializeObject<List<DesignationDto>>(Convert.ToString(response.Result));
 			}
-			response = await _Service.Shifts.GetAllAsync(ComId, UserId, "Shift");
+			response = await _Service.Shifts.GetAllAsync(SD.HRAPIBase, ComId, UserId, "Shift");
 			if (response != null && response.IsSuccess)
 			{
 				ShiftList = JsonConvert.DeserializeObject<List<ShiftDto>>(Convert.ToString(response.Result));
 			}
-			response = await _Service.CommonDatas.GetAllAsync(ComId, UserId, "Shift");
+			response = await _Service.CommonDatas.GetAllAsync(SD.HRAPIBase, ComId, UserId, "Shift");
 			if (response != null && response.IsSuccess)
 			{
 				CommonDataList = JsonConvert.DeserializeObject<List<CommonDataDto>>(Convert.ToString(response.Result));
@@ -164,7 +165,7 @@ namespace Solution.Web.HR.Controllers
 			var ComId = Request.Cookies["ComId"].ToString();
 			string UserId = Request.Cookies["UserId"].ToString();
 
-			var response = await _Service.Employees.GetByIdAsync(id, ComId, UserId, route);
+			var response = await _Service.Employees.GetByIdAsync(SD.HRAPIBase, id, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				EmployeeDto model = JsonConvert.DeserializeObject<EmployeeDto>(Convert.ToString(response.Result));
@@ -184,7 +185,7 @@ namespace Solution.Web.HR.Controllers
 				string UserId = Request.Cookies["UserId"].ToString();
 
 				model.ComId = ComId;
-				var response = await _Service.Employees.UpdateAsync(model, ComId, UserId, route);
+				var response = await _Service.Employees.UpdateAsync(SD.HRAPIBase, model, ComId, UserId, route);
 				if (response != null && response.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} updated successfully.";
@@ -200,7 +201,7 @@ namespace Solution.Web.HR.Controllers
 			var ComId = Request.Cookies["ComId"];
 			string UserId = Request.Cookies["UserId"].ToString();
 
-			var response = await _Service.Employees.GetByIdAsync(id, ComId, UserId, route);
+			var response = await _Service.Employees.GetByIdAsync(SD.HRAPIBase, id, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				EmployeeDto model = JsonConvert.DeserializeObject<EmployeeDto>(Convert.ToString(response.Result));
@@ -217,7 +218,7 @@ namespace Solution.Web.HR.Controllers
 			var ComId = Request.Cookies["ComId"];
 			string UserId = Request.Cookies["UserId"].ToString();
 
-			var response = await _Service.Employees.DeleteAsync(model.Id, ComId, UserId, route);
+			var response = await _Service.Employees.DeleteAsync(SD.HRAPIBase, model.Id, ComId, UserId, route);
 			if (response.IsSuccess)
 			{
 				TempData["Success"] = $"{controllerName} deleted successfully.";

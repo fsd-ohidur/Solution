@@ -1,7 +1,28 @@
+using Solution.Core;
+using Solution.Web.CNF.Services;
+using Solution.Web.CNF.Services.IServices;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddHttpClient<IUnitOfService, UnitOfService>();
+SD.CNFAPIBase = builder.Configuration["ServiceUrls:CNFAPI"];
+SD.HRAPIBase = builder.Configuration["ServiceUrls:HRAPI"];
+builder.Services.AddScoped<IUnitOfService, UnitOfService>();
+
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AllowAnyOrigin", builder =>
+	{
+		builder.AllowAnyOrigin()
+				   .AllowAnyHeader()
+				   .AllowAnyMethod();
+	});
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -17,6 +38,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseCors("AllowAnyOrigin");
 
 app.UseAuthorization();
 

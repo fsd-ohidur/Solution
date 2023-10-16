@@ -1,0 +1,53 @@
+﻿@using Solution.Core.Models.CNF.Dto;
+@model CreateExchangeDto
+
+@{
+	var title = "Create Exchange";
+	ViewData["Title"] = title;
+}
+
+<div class="card">
+	<div class="card-header">
+		<h2>@title</h2>
+	</div>
+	<div class="card-body">
+		<form method="post">
+			<div class="form-floating mb-2">
+				<input asp-for="dtExchange" class="form-control" placeholder=" " type="date" />
+				<label asp-for="dtExchange" class="control-label"></label>
+				<span asp-validation-for="dtExchange" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<select asp-for="FromCurrency" class="form-control" asp-items="ViewBag.FromCurrencyList">
+					@*<option disabled selected>--Select Department--</option>*@
+				</select>
+				<label asp-for="FromCurrency" class="control-label">From Currency</label>
+				<span asp-validation-for="FromCurrency" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<select asp-for="ToCurrency" class="form-control" asp-items="ViewBag.ToCurrencyList">
+					@*<option disabled selected>--Select Department--</option>*@
+				</select>
+				<label asp-for="ToCurrency" class="control-label">To Currency</label>
+				<span asp-validation-for="ToCurrency" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="Rate" class="form-control" placeholder=" " />
+				<label asp-for="Rate" class="control-label"></label>
+				<span asp-validation-for="Rate" class="text-danger"></span>
+			</div>
+			<div class="form-group mt-2">
+				<div class="d-flex mb-2">
+					<button type="submit" class="btn btn-lg btn-success">Create</button>
+					<a asp-action="Index" class="btn btn-lg btn-warning ms-1">Back to list</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

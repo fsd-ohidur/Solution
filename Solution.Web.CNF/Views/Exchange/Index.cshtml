@@ -1,0 +1,61 @@
+﻿@using Solution.Core.Models.CNF.Dto;
+@model IEnumerable<ExchangeDto>
+
+@{
+	var title = "Exchange List";
+	ViewData["Title"] = title;
+}
+<partial name="_Notification" />
+<div class="card">
+	<div class="card-header">
+		<div class="row">
+			<div class="col-8">
+				<h2>@title</h2>
+			</div>
+			<div class="col-4 text-end">
+				<a asp-action="Create" class="btn btn-success text-white mt-1"><i class="fas fa-plus"></i> Create New</a>
+			</div>
+		</div>
+	</div>
+	<div class="card-body">
+		<div id="div-table"></div>
+	</div>
+</div>
+@section Scripts{
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$.ajax({
+				type: "GET",
+				url: '@Url.Action("GetAll", "Exchange")',
+				success: function (response) {
+					var Data = response.data;
+					console.log(Data);
+					var table = new Tabulator("#div-table", {
+						data: Data,
+						layout: "fitColumns",
+						columns: [
+							{ title: "Ex. Date", field: "dtExchange", headerFilter: "input" },
+							{ title: "From Currency", field: "fromCurrency", headerFilter: "input" },
+							{ title: "To Currency", field: "toCurrency", headerFilter: "input" },
+							{ title: "Ex. Rate", field: "rate", headerFilter: "input" },
+							{
+								title: "ACTIONS", field: "button", headerHozAlign: "left", headerSort: false, hozAlign: "left", resizable: false,
+								formatter: function (cell, formatterParams, onRendered) {
+									var data = cell.getData();
+									var EditUrl = '@Url.Action("Edit", "Exchange")/' + data.id;
+									var DeleteUrl = '@Url.Action("Delete", "Exchange")/' + data.id;
+
+									var Edit = `<a href='${EditUrl}' class='btn btn-warning'><i class='fas fa-edit'></i> </a>`;
+									var Delete = `<a href='${DeleteUrl}' class='btn btn-danger'><i class='fas fa-trash'></i> </a>`;
+									var html = `${Edit} ${Delete}`;
+
+									return html;
+								}
+							}
+						],
+					});
+				}
+			})
+		});
+	</script>
+	}

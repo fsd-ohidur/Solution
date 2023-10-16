@@ -11,11 +11,10 @@
 		<h3>@title</h3>
 	</div>
 	<div class="card-body">
-		<form method="post">
+		<form asp-action="Create" method="post">
 			<input hidden id="BasicPercent" value="@company.Basic" />
 			<input hidden id="HRentPercent" value="@company.HRent" />
 			<input hidden id="MedicalPercent" value="@company.Medical" />
-
 			<input asp-for="Id" hidden />
 
 			<div class="row">
@@ -66,8 +65,9 @@
 						<select asp-for="GenderId" class="form-control" asp-items="ViewBag.Genders">
 							<option disabled selected>--Select Gender--</option>
 						</select>
-						<label asp-for="Gender" class="control-label"></label>
-						<span asp-validation-for="Gender" class="text-danger"></span>
+						<label asp-for="GenderId" class="control-label">Gender</label>
+						<span asp-validation-for="GenderId" class="text-danger"></span>
+
 					</div>
 				</div>
 				<div class="col-6">
@@ -116,7 +116,7 @@
 
 			<div class="form-group mt-2">
 				<div class="d-flex mb-2">
-					<button type="submit" class="btn btn-lg btn-info">Update</button>
+					<button type="submit" class="btn btn-lg btn-success">Create</button>
 					<a asp-action="Index" class="btn btn-lg btn-warning ms-1">Back to list</a>
 				</div>
 			</div>
@@ -139,13 +139,10 @@
 		var HRentAmount = Number(GrossAmount * HRentPercent / 100.0);
 		var OtherAmount = GrossAmount - (BasicAmount + HRentAmount + MedicalAmount);
 
-
-
 		document.getElementById('Basic').value = BasicAmount;
 		document.getElementById('HRent').value = HRentAmount;
 		document.getElementById('Medical').value = MedicalAmount;
 		document.getElementById('Other').value = OtherAmount;
-
 	}
 </script>
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Solution.Core;
 using Solution.Core.Models.Common;
 using Solution.Core.Models.Common.Dto;
 using Solution.Web.HR.Services.IServices;
@@ -31,7 +32,7 @@ namespace Solution.Web.HR.Controllers
 			var ComId = "";
 
 			List<CompanyDto> list = new();
-			var response = await _context.Companies.GetAllAsync(ComId, UserId, route);
+			var response = await _context.Companies.GetCompanyAsync(SD.HRAPIBase, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				list = JsonConvert.DeserializeObject<List<CompanyDto>>(Convert.ToString(response.Result));
@@ -54,7 +55,7 @@ namespace Solution.Web.HR.Controllers
 			var UserId = Request.Cookies["UserId"];
 
 			CompanyDto model = new();
-			var response = await _context.Companies.GetByIdAsync(ComId, ComId, UserId, route);
+			var response = await _context.Companies.GetByIdAsync(SD.HRAPIBase, ComId, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				model = JsonConvert.DeserializeObject<CompanyDto>(Convert.ToString(response.Result));

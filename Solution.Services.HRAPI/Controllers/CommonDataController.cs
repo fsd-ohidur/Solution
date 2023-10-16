@@ -29,7 +29,7 @@ namespace Solution.Services.HRAPI.Controllers
 			try
 			{
 				HttpContext.Request.Headers.TryGetValue("ComId", out var ComId);
-				IEnumerable<CommonData> model = await _unitOfWork.CommonDatas.GetAllAsync(x=>x.ComId==ComId.ToString(), orderBy: x => x.OrderBy(y => y.CommonType).OrderBy(y=>y.CommonName));
+				IEnumerable<CommonData> model = await _unitOfWork.CommonDatas.GetAllAsync(x=>x.ComId==ComId.ToString(), orderBy: x => x.OrderBy(y => y.CommonType));
 				_response.Result= _mapper.Map<IEnumerable<CommonDataDto>>(model); 	
 			}
 			catch (Exception ex)

@@ -4,7 +4,6 @@ using Solution.Web.HR.Services.IServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddHttpClient<IUnitOfService,UnitOfService>();
 SD.HRAPIBase = builder.Configuration["ServiceUrls:HRAPI"];
 builder.Services.AddScoped<IUnitOfService, UnitOfService>();

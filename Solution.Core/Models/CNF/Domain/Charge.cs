@@ -25,11 +25,8 @@ namespace Solution.Core.Models.CNF.Domain
 		public string Department { get; set; } = "Custom";
 		[Required]
 		[DisplayName("Disabled?")]
-		public byte IsDisabled { get; set; } = 0;
+		public bool IsDisabled { get; set; } = false;
 		[MaxLength(36)]
 		public string? ComId { get; set; }
-		[ForeignKey("ComId")]
-		[ValidateNever]
-		public Company Company { get; set; }
 	}
 }

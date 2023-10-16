@@ -1,0 +1,110 @@
+﻿@using Solution.Core.Models.CNF.Dto;
+@model ClientDto
+@{
+	var title = "Delete Client";
+	ViewData["Title"] = title;
+}
+<div class="card">
+	<div class="card-header bg-danger">
+		<h3 class="text-white">@title</h3>
+	</div>
+	<div class="card-body">
+		<form method="post">
+			<input asp-for="Id" hidden />
+			<div class="form-floating mb-2">
+				<input asp-for="NameFull" class="form-control" placeholder=" " readonly/>
+				<label asp-for="NameFull" class="control-label"></label>
+				<span asp-validation-for="NameFull" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="NameShort" class="form-control" placeholder=" " readonly />
+				<label asp-for="NameShort" class="control-label"></label>
+				<span asp-validation-for="NameShort" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="BillTo" class="form-control" placeholder=" " readonly/>
+				<label asp-for="BillTo" class="control-label"></label>
+				<span asp-validation-for="BillTo" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="Address" class="form-control" placeholder=" " readonly />
+				<label asp-for="Address" class="control-label"></label>
+				<span asp-validation-for="Address" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="ContName" class="form-control" placeholder=" " readonly />
+				<label asp-for="ContName" class="control-label"></label>
+				<span asp-validation-for="ContName" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="ContNo" class="form-control" placeholder=" " readonly/>
+				<label asp-for="ContNo" class="control-label"></label>
+				<span asp-validation-for="ContNo" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="ContEmail" class="form-control" placeholder=" " readonly />
+				<label asp-for="ContEmail" class="control-label"></label>
+				<span asp-validation-for="ContEmail" class="text-danger"></span>
+			</div>
+			<div class="row">
+				<div class="col-4">
+					<div class="form-floating mb-2">
+						<input asp-for="Com300" class="form-control" placeholder=" " readonly/>
+						<label asp-for="Com300" class="control-label"></label>
+						<span asp-validation-for="Com300" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="form-floating mb-2">
+						<input asp-for="Com300Min" class="form-control" placeholder=" " readonly />
+						<label asp-for="Com300Min" class="control-label"></label>
+						<span asp-validation-for="Com300Min" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="form-floating mb-2">
+						<input asp-for="Com300Max" class="form-control" placeholder=" " readonly />
+						<label asp-for="Com300Max" class="control-label"></label>
+						<span asp-validation-for="Com300Max" class="text-danger"></span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-4">
+					<div class="form-floating mb-2">
+						<input asp-for="Com301" class="form-control" placeholder=" " readonly />
+						<label asp-for="Com301" class="control-label"></label>
+						<span asp-validation-for="Com301" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="form-floating mb-2">
+						<input asp-for="Com301Min" class="form-control" placeholder=" " readonly />
+						<label asp-for="Com301Min" class="control-label"></label>
+						<span asp-validation-for="Com301Min" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="form-floating mb-2">
+						<input asp-for="Com301Max" class="form-control" placeholder=" " readonly />
+						<label asp-for="Com301Max" class="control-label"></label>
+						<span asp-validation-for="Com301Max" class="text-danger"></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-check form-switch">
+				<input class="form-check-input" type="checkbox" asp-for="IsDisabled" readonly>
+				<label class="form-check-label" asp-for="IsDisabled"></label>
+			</div>
+			
+			<hr />
+			<div class="form-group mt-2">
+				<div class="d-flex mb-2">
+					<button type="submit" class="btn btn-lg btn-danger">Delete</button>
+					<a asp-action="Index" class="btn btn-lg btn-info ms-1">Back to list</a>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>

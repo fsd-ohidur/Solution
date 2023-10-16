@@ -17,11 +17,5 @@
 		<ProjectReference Include="..\Solution.Core\Solution.Core.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="wwwroot\lib\font-awesome\css\" />
-		<Folder Include="wwwroot\lib\font-awesome\js\" />
-		<Folder Include="wwwroot\lib\tabulator\" />
-	</ItemGroup>
-
 
 </Project>

@@ -29,9 +29,6 @@ namespace Solution.Core.Models.CNF.Dto
 		public string Flag { get; set; } = "Export";
 		[MaxLength(36)]
 		public string? ComId { get; set; }
-		[ForeignKey("ComId")]
-		[ValidateNever]
-		public Company Company { get; set; }
 	}
 	public class ExchangeDto : CreateExchangeDto
 	{

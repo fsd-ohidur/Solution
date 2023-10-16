@@ -22,7 +22,7 @@ namespace Solution.Services.CNFAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Buyer", b =>
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.Agent", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -30,7 +30,6 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasColumnOrder(1);
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -39,17 +38,14 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("ContEmail")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ContName")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("ContNo")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -61,8 +57,8 @@ namespace Solution.Services.CNFAPI.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("IsDisabled")
-                        .HasColumnType("tinyint");
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
                         .IsRequired()
@@ -84,12 +80,261 @@ namespace Solution.Services.CNFAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComId");
+                    b.ToTable("Agents");
+                });
+
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.Bank", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ComId")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("ContEmail")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ContName")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("ContNo")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NameFull")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NameShort")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Banks");
+                });
+
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.BankAccount", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("AccName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("AccNo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("BankId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("BranchName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ComId")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("ContEmail")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ContName")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("ContNo")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankId");
+
+                    b.ToTable("BankAccounts");
+                });
+
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.Buyer", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ComId")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("ContEmail")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ContName")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("ContNo")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NameFull")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NameShort")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Buyers");
                 });
 
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Charge", b =>
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.CarryingContractor", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ComId")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("ContEmail")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ContName")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("ContNo")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NameFull")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NameShort")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CarryingContractors");
+                });
+
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.Charge", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -118,8 +363,8 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<byte>("IsDisabled")
-                        .HasColumnType("tinyint");
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
                         .IsRequired()
@@ -139,12 +384,10 @@ namespace Solution.Services.CNFAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComId");
-
                     b.ToTable("Charges");
                 });
 
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Client", b =>
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.Client", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -152,7 +395,6 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasColumnOrder(1);
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -187,19 +429,16 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("ContEmail")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ContName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("ContNo")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -214,8 +453,8 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<byte>("IsDisabled")
-                        .HasColumnType("tinyint");
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
                         .IsRequired()
@@ -237,12 +476,10 @@ namespace Solution.Services.CNFAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComId");
-
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Depot", b =>
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.Commissioner", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -250,7 +487,50 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasColumnOrder(1);
 
                     b.Property<string>("Address")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ComId")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NameFull")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Commissioners");
+                });
+
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.Depot", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("Address")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -259,17 +539,14 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("ContEmail")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ContName")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("ContNo")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -281,8 +558,8 @@ namespace Solution.Services.CNFAPI.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("IsDisabled")
-                        .HasColumnType("tinyint");
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
                         .IsRequired()
@@ -304,12 +581,10 @@ namespace Solution.Services.CNFAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComId");
-
                     b.ToTable("Depots");
                 });
 
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Exchange", b =>
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.Exchange", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -359,12 +634,10 @@ namespace Solution.Services.CNFAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComId");
-
                     b.ToTable("Exchanges");
                 });
 
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Exporter", b =>
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.Exporter", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -372,7 +645,6 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasColumnOrder(1);
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -381,17 +653,14 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("ContEmail")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ContName")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("ContNo")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -403,8 +672,8 @@ namespace Solution.Services.CNFAPI.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("IsDisabled")
-                        .HasColumnType("tinyint");
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
                         .IsRequired()
@@ -425,13 +694,11 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ComId");
 
                     b.ToTable("Exporters");
                 });
 
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Forwarder", b =>
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.Forwarder", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -439,7 +706,6 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasColumnOrder(1);
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -448,17 +714,14 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("ContEmail")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ContName")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("ContNo")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -470,8 +733,8 @@ namespace Solution.Services.CNFAPI.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("IsDisabled")
-                        .HasColumnType("tinyint");
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
                         .IsRequired()
@@ -493,12 +756,10 @@ namespace Solution.Services.CNFAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComId");
-
                     b.ToTable("Forwarders");
                 });
 
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Importer", b =>
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.Importer", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -506,7 +767,6 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasColumnOrder(1);
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -520,21 +780,17 @@ namespace Solution.Services.CNFAPI.Migrations
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<double>("ComRate")
-                        .HasMaxLength(100)
                         .HasColumnType("float");
 
                     b.Property<string>("ContEmail")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ContName")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("ContNo")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -546,128 +802,7 @@ namespace Solution.Services.CNFAPI.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("IsDisabled")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("LastModifiedBy")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NameFull")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("NameShort")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComId");
-
-                    b.ToTable("Importers");
-                });
-
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Supplier", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)")
-                        .HasColumnOrder(1);
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("ComId")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("ContEmail")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("ContName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("ContNo")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte>("IsDisabled")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("LastModifiedBy")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NameFull")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("NameShort")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComId");
-
-                    b.ToTable("Suppliers");
-                });
-
-            modelBuilder.Entity("Solution.Core.Models.Common.Domain.Company", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)")
-                        .HasColumnOrder(1);
-
-                    b.Property<int>("Basic")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ComName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("HRent")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsInactive")
+                    b.Property<bool>("IsDisabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
@@ -678,93 +813,91 @@ namespace Solution.Services.CNFAPI.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Medical")
-                        .HasColumnType("int");
+                    b.Property<string>("NameFull")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NameShort")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Company");
+                    b.ToTable("Importers");
                 });
 
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Buyer", b =>
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.Supplier", b =>
                 {
-                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("ComId");
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnOrder(1);
 
-                    b.Navigation("Company");
+                    b.Property<string>("Address")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ComId")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("ContEmail")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ContName")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("ContNo")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedBy")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NameFull")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NameShort")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Charge", b =>
+            modelBuilder.Entity("Solution.Core.Models.CNF.Domain.BankAccount", b =>
                 {
-                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
+                    b.HasOne("Solution.Core.Models.CNF.Domain.Bank", "Bank")
                         .WithMany()
-                        .HasForeignKey("ComId");
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Client", b =>
-                {
-                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("ComId");
-
-                    b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Depot", b =>
-                {
-                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("ComId");
-
-                    b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Exchange", b =>
-                {
-                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("ComId");
-
-                    b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Exporter", b =>
-                {
-                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("ComId");
-
-                    b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Forwarder", b =>
-                {
-                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("ComId");
-
-                    b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Importer", b =>
-                {
-                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("ComId");
-
-                    b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("Solution.Core.Models.CNF.Doman.Supplier", b =>
-                {
-                    b.HasOne("Solution.Core.Models.Common.Domain.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("ComId");
-
-                    b.Navigation("Company");
+                    b.Navigation("Bank");
                 });
 #pragma warning restore 612, 618
         }

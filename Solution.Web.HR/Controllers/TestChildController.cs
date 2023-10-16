@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Solution.Core;
 using Solution.Core.Models.Common.Dto;
 using Solution.Core.Models.HR.Dto;
 using Solution.Core.Models.Test.Dto;
@@ -31,7 +32,7 @@ namespace Solution.Web.HR.Controllers
 			var UserId = Request.Cookies["UserId"];
 
 			List<TestChildDto> list = new();
-			var response = await _Service.TestChilds.GetAllAsync(ComId, UserId, route);
+			var response = await _Service.TestChilds.GetAllAsync(SD.HRAPIBase, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				list = JsonConvert.DeserializeObject<List<TestChildDto>>(Convert.ToString(response.Result));
@@ -44,7 +45,7 @@ namespace Solution.Web.HR.Controllers
 		{
 			var ComId = Request.Cookies["ComId"];
 			var UserId = Request.Cookies["UserId"];
-			var model = await _Service.TestChilds.GetByIdAsync(id, ComId, UserId, route);
+			var model = await _Service.TestChilds.GetByIdAsync(SD.HRAPIBase, id, ComId, UserId, route);
 			if (model == null)
 			{
 				return NotFound();
@@ -60,7 +61,7 @@ namespace Solution.Web.HR.Controllers
 			string UserId = Request.Cookies["UserId"].ToString();
 
 			List<TestParentDto> TestParentList = new();
-			response = await _Service.TestParents.GetAllAsync(ComId, UserId, "TestParent");
+			response = await _Service.TestParents.GetAllAsync(SD.HRAPIBase, ComId, UserId, "TestParent");
 			if (response != null && response.IsSuccess)
 			{
 				TestParentList = JsonConvert.DeserializeObject<List<TestParentDto>>(Convert.ToString(response.Result));
@@ -81,7 +82,7 @@ namespace Solution.Web.HR.Controllers
 			if (ModelState.IsValid)
 			{
 				model.ComId = ComId;
-				response = await _Service.TestChilds.CreateAsync(model, ComId, UserId, route);
+				response = await _Service.TestChilds.CreateAsync(SD.HRAPIBase, model, ComId, UserId, route);
 				if (response != null && response.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} created successfully.";
@@ -89,7 +90,7 @@ namespace Solution.Web.HR.Controllers
 				}
 			}
 			List<TestParentDto> TestParentList = new();
-			response = await _Service.TestParents.GetAllAsync(ComId, UserId, "TestParent");
+			response = await _Service.TestParents.GetAllAsync(SD.HRAPIBase, ComId, UserId, "TestParent");
 			if (response != null && response.IsSuccess)
 			{
 				TestParentList = JsonConvert.DeserializeObject<List<TestParentDto>>(Convert.ToString(response.Result));
@@ -105,14 +106,14 @@ namespace Solution.Web.HR.Controllers
 			var ComId = Request.Cookies["ComId"].ToString();
 			string UserId = Request.Cookies["UserId"].ToString();
 
-			var response = await _Service.TestChilds.GetByIdAsync(id, ComId, UserId, route);
+			var response = await _Service.TestChilds.GetByIdAsync(SD.HRAPIBase, id, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				TestChildDto model = JsonConvert.DeserializeObject<TestChildDto>(Convert.ToString(response.Result));
 
 				//--- Dropdown list
 				List<TestParentDto> TestParentList = new();
-				response = await _Service.TestParents.GetAllAsync(ComId, UserId, "TestParent");
+				response = await _Service.TestParents.GetAllAsync(SD.HRAPIBase, ComId, UserId, "TestParent");
 				if (response != null && response.IsSuccess)
 				{
 					TestParentList = JsonConvert.DeserializeObject<List<TestParentDto>>(Convert.ToString(response.Result));
@@ -136,7 +137,7 @@ namespace Solution.Web.HR.Controllers
 			if (ModelState.IsValid)
 			{
 				model.ComId = ComId;
-				response = await _Service.TestChilds.UpdateAsync(model, ComId, UserId, route);
+				response = await _Service.TestChilds.UpdateAsync(SD.HRAPIBase, model, ComId, UserId, route);
 				if (response != null && response.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} updated successfully.";
@@ -145,7 +146,7 @@ namespace Solution.Web.HR.Controllers
 			}
 			//--- Dropdown list
 			List<TestParentDto> TestParentList = new();
-			response = await _Service.TestParents.GetAllAsync(ComId, UserId, "TestParent");
+			response = await _Service.TestParents.GetAllAsync(SD.HRAPIBase, ComId, UserId, "TestParent");
 			if (response != null && response.IsSuccess)
 			{
 				TestParentList = JsonConvert.DeserializeObject<List<TestParentDto>>(Convert.ToString(response.Result));
@@ -161,14 +162,14 @@ namespace Solution.Web.HR.Controllers
 			var ComId = Request.Cookies["ComId"];
 			string UserId = Request.Cookies["UserId"].ToString();
 
-			response = await _Service.TestChilds.GetByIdAsync(id, ComId, UserId, route);
+			response = await _Service.TestChilds.GetByIdAsync(SD.HRAPIBase, id, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				TestChildDto model = JsonConvert.DeserializeObject<TestChildDto>(Convert.ToString(response.Result));
 
 				//--- Dropdown list
 				List<TestParentDto> TestParentList = new();
-				response = await _Service.TestParents.GetAllAsync(ComId, UserId, "TestParent");
+				response = await _Service.TestParents.GetAllAsync(SD.HRAPIBase, ComId, UserId, "TestParent");
 				if (response != null && response.IsSuccess)
 				{
 					TestParentList = JsonConvert.DeserializeObject<List<TestParentDto>>(Convert.ToString(response.Result));
@@ -189,7 +190,7 @@ namespace Solution.Web.HR.Controllers
 			var ComId = Request.Cookies["ComId"];
 			string UserId = Request.Cookies["UserId"].ToString();
 
-			response = await _Service.TestChilds.DeleteAsync(model.Id, ComId, UserId, route);
+			response = await _Service.TestChilds.DeleteAsync(SD.HRAPIBase, model.Id, ComId, UserId, route);
 			if (response.IsSuccess)
 			{
 				TempData["Success"] = $"{controllerName} deleted successfully.";
@@ -197,7 +198,7 @@ namespace Solution.Web.HR.Controllers
 			}
 			//--- Dropdown list
 			List<TestParentDto> TestParentList = new();
-			response = await _Service.TestParents.GetAllAsync(ComId, UserId, "TestParent");
+			response = await _Service.TestParents.GetAllAsync(SD.HRAPIBase, ComId, UserId, "TestParent");
 			if (response != null && response.IsSuccess)
 			{
 				TestParentList = JsonConvert.DeserializeObject<List<TestParentDto>>(Convert.ToString(response.Result));

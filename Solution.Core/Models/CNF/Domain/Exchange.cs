@@ -29,8 +29,5 @@ namespace Solution.Core.Models.CNF.Domain
 		public string Flag { get; set; } = "Export";
 		[MaxLength(36)]
 		public string? ComId { get; set; }
-		[ForeignKey("ComId")]
-		[ValidateNever]
-		public Company Company { get; set; }
 	}
 }

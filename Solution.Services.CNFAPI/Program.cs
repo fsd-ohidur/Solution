@@ -10,9 +10,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAutoMapper(typeof(MappingInitializer));
-
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AllowAnyOrigin", builder =>
+	{
+		builder.AllowAnyOrigin()
+				   .AllowAnyHeader()
+				   .AllowAnyMethod();
+	});
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -29,6 +37,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowAnyOrigin");
 
 app.UseAuthorization();
 

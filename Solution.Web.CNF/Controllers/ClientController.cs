@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Solution.Core;
 using Solution.Core.Models.CNF.Dto;
 using Solution.Web.CNF.Services.IServices;
 
@@ -11,6 +12,7 @@ namespace Solution.Web.CNF.Controllers
 		private readonly IHttpContextAccessor _httpContextAccessor;
 		private string controllerName;
 		private string route = "Client";
+		private string flag = "Export";
 
 		public ClientController(IUnitOfService service, IHttpContextAccessor httpContextAccessor)
 		{
@@ -24,16 +26,7 @@ namespace Solution.Web.CNF.Controllers
 			{
 				return RedirectToAction(nameof(Index), "Home");
 			}
-			var ComId = Request.Cookies["ComId"];
-			var UserId = Request.Cookies["UserId"];
-
-			List<ClientDto> list = new();
-			var response = await _Service.Clients.GetAllAsync(ComId, UserId, route);
-			if (response != null && response.IsSuccess)
-			{
-				list = JsonConvert.DeserializeObject<List<ClientDto>>(Convert.ToString(response.Result));
-			}
-			return View(list);
+			return View();
 		}
 
 		// GET: ClientsController/Details/5
@@ -41,7 +34,7 @@ namespace Solution.Web.CNF.Controllers
 		{
 			var ComId = Request.Cookies["ComId"];
 			var UserId = Request.Cookies["UserId"];
-			var model = await _Service.Clients.GetByIdAsync(id, ComId, UserId, route);
+			var model = await _Service.Clients.GetByIdAsync(SD.CNFAPIBase, id, ComId, UserId, route);
 			if (model == null)
 			{
 				return NotFound();
@@ -50,9 +43,18 @@ namespace Solution.Web.CNF.Controllers
 		}
 
 		// GET: ClientsController/Create
-		public ActionResult Create()
+		public async Task<ActionResult> Create()
 		{
-			return View();
+			CreateClientDto model = new CreateClientDto()
+			{
+				Com300 = 0,
+				Com300Min = 0,
+				Com300Max = 0,
+				Com301 = 0,
+				Com301Min = 0,
+				Com301Max = 0
+			};
+			return View(model);
 		}
 
 		// POST: ClientsController/Create
@@ -66,7 +68,8 @@ namespace Solution.Web.CNF.Controllers
 				string UserId = Request.Cookies["UserId"].ToString();
 
 				model.ComId = ComId;
-				var response = await _Service.Clients.CreateAsync(model, ComId, UserId, route);
+				model.Flag = flag;
+				var response = await _Service.Clients.CreateAsync(SD.CNFAPIBase, model, ComId, UserId, route);
 				if (response != null && response.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} created successfully.";
@@ -82,7 +85,7 @@ namespace Solution.Web.CNF.Controllers
 			var ComId = Request.Cookies["ComId"].ToString();
 			string UserId = Request.Cookies["UserId"].ToString();
 
-			var response = await _Service.Clients.GetByIdAsync(id, ComId, UserId, route);
+			var response = await _Service.Clients.GetByIdAsync(SD.CNFAPIBase, id, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				ClientDto model = JsonConvert.DeserializeObject<ClientDto>(Convert.ToString(response.Result));
@@ -102,7 +105,8 @@ namespace Solution.Web.CNF.Controllers
 				string UserId = Request.Cookies["UserId"].ToString();
 
 				model.ComId = ComId;
-				var response = await _Service.Clients.UpdateAsync(model, ComId, UserId, route);
+				model.Flag = flag;
+				var response = await _Service.Clients.UpdateAsync(SD.CNFAPIBase, model, ComId, UserId, route);
 				if (response != null && response.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} updated successfully.";
@@ -118,7 +122,7 @@ namespace Solution.Web.CNF.Controllers
 			var ComId = Request.Cookies["ComId"];
 			string UserId = Request.Cookies["UserId"].ToString();
 
-			var response = await _Service.Clients.GetByIdAsync(id, ComId, UserId, route);
+			var response = await _Service.Clients.GetByIdAsync(SD.CNFAPIBase, id, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				ClientDto model = JsonConvert.DeserializeObject<ClientDto>(Convert.ToString(response.Result));
@@ -135,13 +139,27 @@ namespace Solution.Web.CNF.Controllers
 			var ComId = Request.Cookies["ComId"];
 			string UserId = Request.Cookies["UserId"].ToString();
 
-			var response = await _Service.Clients.DeleteAsync(model.Id, ComId, UserId, route);
+			var response = await _Service.Clients.DeleteAsync(SD.CNFAPIBase, model.Id, ComId, UserId, route);
 			if (response.IsSuccess)
 			{
 				TempData["Success"] = $"{controllerName} deleted successfully.";
 				return RedirectToAction(nameof(Index));
 			}
 			return View(model);
+		}
+		[HttpGet]
+		public IActionResult GetAll()
+		{
+			var ComId = Request.Cookies["ComId"];
+			var UserId = Request.Cookies["UserId"];
+
+			List<ClientDto> list = new();
+			var response = _Service.Clients.GetAllAsync(SD.CNFAPIBase, ComId, UserId, route).Result;
+			if (response != null && response.IsSuccess)
+			{
+				list = JsonConvert.DeserializeObject<List<ClientDto>>(Convert.ToString(response.Result)).Where(x=>x.Flag==flag).ToList();
+			}
+			return Json(new { Success = 1, error = false, data = list });
 		}
 	}
 }

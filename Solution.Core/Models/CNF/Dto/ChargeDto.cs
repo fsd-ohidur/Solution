@@ -16,21 +16,18 @@ namespace Solution.Core.Models.CNF.Dto
 		[DisplayName("Rate")]
 		public double Rate { get; set; }
 		[Required]
-		[StringLength(15)]
 		[DisplayName("Flag")]
+		[ValidateNever]
 		public string Flag { get; set; } = "Export";
-		[Required]
 		[StringLength(15)]
 		[DisplayName("Department")]
+		[ValidateNever]
 		public string Department { get; set; } = "Custom";
 		[Required]
 		[DisplayName("Disabled?")]
-		public byte IsDisabled { get; set; } = 0;
+		public bool IsDisabled { get; set; } = false;
 		[MaxLength(36)]
 		public string? ComId { get; set; }
-		[ForeignKey("ComId")]
-		[ValidateNever]
-		public Company Company { get; set; }
 	}
 	public class ChargeDto : CreateChargeDto
 	{

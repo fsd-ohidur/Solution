@@ -21,25 +21,21 @@ namespace Solution.Core.Models.CNF.Domain
 		[StringLength(50)]
 		[DisplayName("Bill To")]
 		public string BillTo { get; set; }
-		[Required]
 		[StringLength(100)]
 		[DisplayName("Address")]
-		public string Address { get; set; }
-		[Required]
-		[StringLength(100)]
+		public string? Address { get; set; } = "";
+		[StringLength(30)]
 		[DisplayName("Contact Name")]
-		public string ContName { get; set; } = "";
-		[Required]
-		[StringLength(100)]
+		public string? ContName { get; set; } = "";
+		[StringLength(30)]
 		[DisplayName("Contact No")]
-		public string ContNo { get; set; } = "";
-		[Required]
-		[StringLength(100)]
+		public string? ContNo { get; set; } = "";
+		[StringLength(50)]
 		[DisplayName("Contact Email")]
-		public string ContEmail { get; set; } = "";
+		public string? ContEmail { get; set; } = "";
 		[Required]
 		[DisplayName("Disabled?")]
-		public byte IsDisabled { get; set; } = 0;
+		public bool IsDisabled { get; set; } = false;
 		[StringLength(15)]
 		[DisplayName("Flag")]
 		[ValidateNever]
@@ -67,8 +63,5 @@ namespace Solution.Core.Models.CNF.Domain
 		public long Com301Max { get; set; } = 0;
 		[MaxLength(36)]
 		public string? ComId { get; set; }
-		[ForeignKey("ComId")]
-		[ValidateNever]
-		public Company Company { get; set; }
 	}
 }

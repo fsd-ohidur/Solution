@@ -16,38 +16,30 @@ namespace Solution.Core.Models.CNF.Dto
 		[StringLength(50)]
 		[DisplayName("Short Name")]
 		public string NameShort { get; set; }
-		[Required]
 		[StringLength(100)]
 		[DisplayName("Address")]
-		public string Address { get; set; }
-		[Required]
+		public string? Address { get; set; }
 		[StringLength(30)]
 		[DisplayName("Contact Name")]
-		public string ContName { get; set; } = "";
-		[Required]
+		public string? ContName { get; set; } = "";
 		[StringLength(30)]
 		[DisplayName("Contact No")]
-		public string ContNo { get; set; } = "";
-		[Required]
+		public string? ContNo { get; set; } = "";
 		[StringLength(50)]
 		[DisplayName("Contact Email")]
-		public string ContEmail { get; set; } = "";
+		public string? ContEmail { get; set; } = "";
 		[Required]
 		[DisplayName("Disabled?")]
-		public byte IsDisabled { get; set; } = 0;
+		public bool IsDisabled { get; set; } = false;
 		[Required]
 		[StringLength(100)]
 		[DisplayName("Bill To")]
 		public string BillAddTo { get; set; } = "";
 		[Required]
-		[StringLength(100)]
 		[DisplayName("Commission Rate")]
 		public double ComRate { get; set; } = 0;
 		[MaxLength(36)]
 		public string? ComId { get; set; }
-		[ForeignKey("ComId")]
-		[ValidateNever]
-		public Company Company { get; set; }
 	}
 	public class ImporterDto : CreateImporterDto
 	{

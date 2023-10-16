@@ -16,29 +16,22 @@ namespace Solution.Core.Models.CNF.Domain
 		[StringLength(50)]
 		[DisplayName("Code")]
 		public string NameShort { get; set; }
-		[Required]
 		[StringLength(100)]
 		[DisplayName("Address")]
-		public string Address { get; set; }
-		[Required]
+		public string? Address { get; set; } = "";
 		[StringLength(30)]
 		[DisplayName("Contact Name")]
-		public string ContName { get; set; } = "";
-		[Required]
+		public string? ContName { get; set; } = "";
 		[StringLength(30)]
 		[DisplayName("Contact No")]
-		public string ContNo { get; set; } = "";
-		[Required]
+		public string? ContNo { get; set; } = "";
 		[StringLength(50)]
 		[DisplayName("Contact Email")]
-		public string ContEmail { get; set; } = "";
+		public string? ContEmail { get; set; } = "";
 		[Required]
 		[DisplayName("Disabled?")]
-		public byte IsDisabled { get; set; } = 0;
+		public bool IsDisabled { get; set; } = false;
 		[MaxLength(36)]
 		public string? ComId { get; set; }
-		[ForeignKey("ComId")]
-		[ValidateNever]
-		public Company Company { get; set; }
 	}
 }

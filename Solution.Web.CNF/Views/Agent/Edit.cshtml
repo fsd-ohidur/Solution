@@ -1,0 +1,65 @@
+﻿@using Solution.Core.Models.CNF.Dto;
+@model AgentDto
+@{
+	var title = "Edit Agent";
+	ViewData["Title"] = title;
+}
+<div class="card">
+	<div class="card-header">
+		<h3>@title</h3>
+	</div>
+	<div class="card-body">
+		<form method="post">
+			<input asp-for="Id" hidden />
+
+			<div class="form-floating mb-2">
+				<input asp-for="NameFull" class="form-control" placeholder=" " />
+				<label asp-for="NameFull" class="control-label"></label>
+				<span asp-validation-for="NameFull" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="NameShort" class="form-control" placeholder=" " />
+				<label asp-for="NameShort" class="control-label"></label>
+				<span asp-validation-for="NameShort" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="Address" class="form-control" placeholder=" " />
+				<label asp-for="Address" class="control-label"></label>
+				<span asp-validation-for="Address" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="ContName" class="form-control" placeholder=" " />
+				<label asp-for="ContName" class="control-label"></label>
+				<span asp-validation-for="ContName" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="ContNo" class="form-control" placeholder=" " />
+				<label asp-for="ContNo" class="control-label"></label>
+				<span asp-validation-for="ContNo" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-2">
+				<input asp-for="ContEmail" class="form-control" placeholder=" " />
+				<label asp-for="ContEmail" class="control-label"></label>
+				<span asp-validation-for="ContEmail" class="text-danger"></span>
+			</div>
+			<div class="form-check form-switch">
+				<input class="form-check-input" type="checkbox" asp-for="IsDisabled">
+				<label class="form-check-label" asp-for="IsDisabled"></label>
+			</div>
+			
+			<hr />
+			<div class="form-group mt-2">
+				<div class="d-flex mb-2">
+					<button type="submit" class="btn btn-lg btn-warning">Update</button>
+					<a asp-action="Index" class="btn btn-lg btn-info ms-1">Back to list</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Solution.Core;
 using Solution.Core.Models.Common.Dto;
 using Solution.Core.Models.HR.Dto;
 using Solution.Core.Models.Test.Dto;
@@ -30,7 +31,7 @@ namespace Solution.Web.HR.Controllers
 			var UserId = Request.Cookies["UserId"];
 
 			List<TestParentDto> list = new();
-			var response = await _Service.TestParents.GetAllAsync(ComId,UserId, route);
+			var response = await _Service.TestParents.GetAllAsync(SD.HRAPIBase, ComId,UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				list = JsonConvert.DeserializeObject<List<TestParentDto>>(Convert.ToString(response.Result));
@@ -43,7 +44,7 @@ namespace Solution.Web.HR.Controllers
 		{
 			var ComId = Request.Cookies["ComId"];
 			var UserId = Request.Cookies["UserId"];
-			var model = await _Service.TestParents.GetByIdAsync(id,ComId,UserId, route);
+			var model = await _Service.TestParents.GetByIdAsync(SD.HRAPIBase, id,ComId,UserId, route);
 			if (model == null)
 			{
 				return NotFound();
@@ -68,7 +69,7 @@ namespace Solution.Web.HR.Controllers
 				string UserId = Request.Cookies["UserId"].ToString();
 
 				model.ComId = ComId;
-				var response = await _Service.TestParents.CreateAsync(model,ComId,UserId, route);
+				var response = await _Service.TestParents.CreateAsync(SD.HRAPIBase, model,ComId,UserId, route);
 				if (response != null && response.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} created successfully.";
@@ -84,7 +85,7 @@ namespace Solution.Web.HR.Controllers
 			var ComId = Request.Cookies["ComId"].ToString();
 			string UserId = Request.Cookies["UserId"].ToString();
 
-			var response = await _Service.TestParents.GetByIdAsync(id, ComId, UserId, route);
+			var response = await _Service.TestParents.GetByIdAsync(SD.HRAPIBase, id, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				TestParentDto model = JsonConvert.DeserializeObject<TestParentDto>(Convert.ToString(response.Result));
@@ -104,7 +105,7 @@ namespace Solution.Web.HR.Controllers
 				string UserId = Request.Cookies["UserId"].ToString();
 
 				model.ComId = ComId;
-				var response = await _Service.TestParents.UpdateAsync(model, ComId, UserId, route);
+				var response = await _Service.TestParents.UpdateAsync(SD.HRAPIBase, model, ComId, UserId, route);
 				if (response != null && response.IsSuccess)
 				{
 					TempData["Success"] = $"{controllerName} updated successfully.";
@@ -120,7 +121,7 @@ namespace Solution.Web.HR.Controllers
 			var ComId = Request.Cookies["ComId"];
 			string UserId = Request.Cookies["UserId"].ToString();
 
-			var response = await _Service.TestParents.GetByIdAsync(id, ComId, UserId, route);
+			var response = await _Service.TestParents.GetByIdAsync(SD.HRAPIBase, id, ComId, UserId, route);
 			if (response != null && response.IsSuccess)
 			{
 				TestParentDto model = JsonConvert.DeserializeObject<TestParentDto>(Convert.ToString(response.Result));
@@ -137,7 +138,7 @@ namespace Solution.Web.HR.Controllers
 			var ComId = Request.Cookies["ComId"];
 			string UserId = Request.Cookies["UserId"].ToString();
 
-			var response = await _Service.TestParents.DeleteAsync(model.Id, ComId, UserId, route);
+			var response = await _Service.TestParents.DeleteAsync(SD.HRAPIBase, model.Id, ComId, UserId, route);
 			if (response.IsSuccess)
 			{
 				TempData["Success"] = $"{controllerName} deleted successfully.";
